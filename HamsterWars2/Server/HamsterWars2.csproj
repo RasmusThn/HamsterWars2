@@ -11,7 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\HamsterWars2.Presentation\HamsterWars2.Presentation.csproj" />
+    <ProjectReference Include="..\..\LoggerService\LoggerService.csproj" />
+    <ProjectReference Include="..\..\Repository\Repository.csproj" />
+    <ProjectReference Include="..\..\Service\Service.csproj" />
   </ItemGroup>
 
 
