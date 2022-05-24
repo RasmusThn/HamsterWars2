@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.Models;
 
-namespace Contracts
+namespace Contracts;
+
+public interface IMatchRepository
 {
-    internal class IMatchRepository
-    {
-    }
+    IEnumerable<Match> GetAllMatches(bool trackChanges);
+    Match GetMatchById(int matchId, bool trackChanges);
+    void CreateMatch(Match match);
+
 }

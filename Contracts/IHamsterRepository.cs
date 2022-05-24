@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.Models;
 
-namespace Contracts
+namespace Contracts;
+
+public interface IHamsterRepository
 {
-    internal class IHamsterRepository
-    {
-    }
+    IEnumerable<Hamster> GetAllHamsters(bool trackChanges);
+    Hamster GetHamsterById(int hamsterId, bool trackChanges);
+    void CreateHamster(Hamster hamster);
 }

@@ -1,6 +1,23 @@
-﻿namespace HamsterWars2.ContextFactory
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Repository;
+
+namespace HamsterWars2.ContextFactory;
+
+public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryContext>
 {
-    public class RepositoryContextFactory
+    public RepositoryContext CreateDbContext(string[] args)
     {
+        var configuration = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json")
+        .Build();
+
+        var builder = new DbContextOptionsBuilder<RepositoryContext>()
+        .UseSqlServer(configuration.GetConnectionString("sqlConnection"),
+            b => b.MigrationsAssembly("HamsterWars2"));
+
+        return new RepositoryContext(builder.Options);
     }
 }
+

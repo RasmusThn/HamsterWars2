@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace HamsterWars2.Presentation;
 
-namespace HamsterWars2.Presentation
+public static class AssemblyReference
 {
-    internal class AssemblyReference
-    {
-    }
 }
