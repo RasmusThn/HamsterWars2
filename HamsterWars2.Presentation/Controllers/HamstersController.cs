@@ -19,7 +19,7 @@ namespace HamsterWars2.Presentation.Controllers
         {
             _service = service;
         }
-        [HttpGet]
+        [HttpGet]//Tar fram alla Hamstrar
         public IActionResult GetHamsters()
         {
             
@@ -27,14 +27,14 @@ namespace HamsterWars2.Presentation.Controllers
 
                 return Ok(hamsters);
         }
-        [HttpGet("{id:int}", Name ="HamsterById")]
+        [HttpGet("{id:int}", Name ="HamsterById")] // Tar fram Hamster efter Id 
         public IActionResult GetHamster(int id)
         {
             var hamster = _service.HamsterService.GetHamsterById(id,trackChanges:false);
 
             return Ok(hamster);
         }
-        [HttpPost]
+        [HttpPost] //Skapar ny hamster 
         public IActionResult CreateHamster([FromBody] HamsterForCreationDto hamster)
         {
             if (hamster is null)
@@ -43,6 +43,38 @@ namespace HamsterWars2.Presentation.Controllers
             }
             var createdHamster = _service.HamsterService.CreateHamster(hamster);
             return CreatedAtRoute("HamsterById", new {id = createdHamster.Id},createdHamster);
+        }
+
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateHamster(int id, [FromBody] bool isWinner) //TODO: Bool funkar inte i postman...
+        {
+            _service.HamsterService.UpdateHamsterGames(id, isWinner, trackChanges: true);
+            return NoContent();
+        }
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteHamster(int id)
+        {
+            _service.HamsterService.DeleteHamsterById(id, trackChanges: true);
+
+            return Ok();
+        }
+        
+    }
+    [Route("api/hamsters/random")] //TODO: Behöver man göra såhär?
+    [ApiController]
+    public class RandomController : ControllerBase
+    {
+        private readonly IServiceManager _service;
+
+        public RandomController(IServiceManager service)
+        {
+            _service = service;
+        }
+        public IActionResult RandomHamster()
+        {
+            var hamster = _service.HamsterService.GetRandomHamster(trackChanges: false);
+
+            return CreatedAtRoute("HamsterById", new { id = hamster.Id }, hamster);
         }
     }
 }

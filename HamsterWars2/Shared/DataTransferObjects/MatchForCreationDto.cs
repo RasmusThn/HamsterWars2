@@ -10,9 +10,9 @@ namespace Shared.DataTransferObjects
     public record MatchForCreationDto
     {
         [Required]
-        public int WinId { get; set; }
+        public int WinnerId { get; set; }
         [Required]
-        public int LossId { get; set; }
+        public int LoserId { get; set; }
 
     }
 }

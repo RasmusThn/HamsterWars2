@@ -45,7 +45,7 @@ internal sealed class MatchService : IMatchService
         _repository.Match.CreateMatch(matchEntity);
         _repository.Save();
 
-        var matchToReturn = _mapper.Map<MatchDto>(match);
+        var matchToReturn = _mapper.Map<MatchDto>(matchEntity);
 
         return matchToReturn;
     }

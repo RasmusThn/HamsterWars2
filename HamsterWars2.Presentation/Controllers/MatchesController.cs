@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,17 @@ namespace HamsterWars2.Presentation.Controllers
             return Ok(matches);
         }
         [HttpGet("{id:int}", Name ="MatchById")]
-        public IActionResult GetMatch(int matchId)
+        public IActionResult GetMatch(int id)
         {
-            var match = _service.MatchService.GetMatchById(matchId, trackChanges: false);
+            var match = _service.MatchService.GetMatchById(id, trackChanges: false);
             return Ok(match);
         }
-        [HttpPost("{winId:int}")]//TODO:Fortsätt här, ska skicka in 2 st olika hamster id. 
+        [HttpPost]//Tar in vinnar Id och förlorar Id i body
+        public IActionResult CreateMatch([FromBody] MatchForCreationDto match)
+        {
+            var createdMatch = _service.MatchService.CreateMatch(match);
+
+            return CreatedAtRoute("MatchById", new { id = createdMatch.Id }, createdMatch);
+        }
     }
 }

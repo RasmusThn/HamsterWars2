@@ -9,7 +9,8 @@ public class HamsterRepository : RepositoryBase<Hamster>, IHamsterRepository
     {
     }
 
-    public void CreateHamster(Hamster hamster) => Create(hamster); //TODO: Här smäller det 
+    public void CreateHamster(Hamster hamster) => Create(hamster); 
+    public void DeleteHamster(Hamster hamster) => Delete(hamster);
 
     public IEnumerable<Hamster> GetAllHamsters(bool trackChanges) => 
         FindAll(trackChanges)

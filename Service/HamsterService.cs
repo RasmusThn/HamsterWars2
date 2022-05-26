@@ -31,6 +31,17 @@ internal sealed class HamsterService : IHamsterService
         return hamsterToReturn;
     }
 
+    public void DeleteHamsterById(int hamsterId, bool trackChanges)
+    {
+        var hamster = _repository.Hamster.GetHamsterById(hamsterId, trackChanges);
+        if (hamster is null)
+        {
+            throw new HamsterNotFoundException(hamsterId);
+        }
+        _repository.Hamster.DeleteHamster(hamster);
+        _repository.Save();
+    }
+
     public IEnumerable<HamsterDto> GetAllHamsters(bool trackChanges)
     {
         
@@ -49,5 +60,37 @@ internal sealed class HamsterService : IHamsterService
         }
         var hamsterDto = _mapper.Map<HamsterDto>(hamster);
         return hamsterDto;
+    }
+
+    public HamsterDto GetRandomHamster(bool trackChanges)
+    {
+        var hamsters = _repository.Hamster.GetAllHamsters(trackChanges);
+        
+        Random rnd = new Random();
+        int n = rnd.Next(1, hamsters.Count());
+
+        var rndHamster = hamsters.Where(h => h.Id.Equals(n)).FirstOrDefault(); //5-7 ms
+        //var hamster = _repository.Hamster.GetHamsterById(n, trackChanges); //Anrop till Databas igen, 6-8ms
+
+        var hamsterDto = _mapper.Map<HamsterDto>(rndHamster);
+
+        return hamsterDto;
+    }
+
+    public void UpdateHamsterGames(int hamsterId, bool isWinner, bool trackChanges)
+    {
+        var hamster = _repository.Hamster.GetHamsterById(hamsterId, trackChanges);
+
+        if (isWinner)
+        {
+            hamster.Wins++;
+            hamster.Games++;
+        }
+        else
+        {
+            hamster.Losses++;
+            hamster.Games++;
+        }
+        _repository.Save();
     }
 }
