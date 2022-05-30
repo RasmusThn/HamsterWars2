@@ -1,0 +1,47 @@
+﻿@using Entities.Models
+@using HamsterWars2Blazor.Service
+<h3>Component</h3>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Winner</th>
+                <th>Loser</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var match in Matches)
+           {
+               <tr>
+                   <td>
+                       @match.Id
+                   </td>
+                   <td>
+                       @match.WinnerId
+                   </td>
+                   <td>
+                       @match.LoserId
+                   </td>
+                   <td>
+                       @match.TimeStamp
+                   </td>
+               </tr>
+           }
+        </tbody>
+    </table>
+     </div>
+@code {
+    public IEnumerable<Match> Matches { get; set; }
+
+
+    [Inject]
+    public IMatchHttpService MatchHttpService{ get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Matches = await MatchHttpService.GetAllMatches();
+    }
+}

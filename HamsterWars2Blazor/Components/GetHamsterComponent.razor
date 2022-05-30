@@ -1,0 +1,18 @@
+﻿@using Entities.Models
+@using HamsterWars2Blazor.Service
+<h3>Component</h3>
+
+<div>@hamster.Name</div>
+
+@code {
+    public Hamster hamster { get; set; }
+
+    [Inject]
+    public IHamsterHttpService HttpService{ get; set; }
+
+     protected override async Task OnInitializedAsync()
+    {
+        hamster = await HttpService.GetHamsterById(2);
+       
+    }
+}
