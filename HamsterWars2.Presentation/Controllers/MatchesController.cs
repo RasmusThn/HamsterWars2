@@ -32,12 +32,26 @@ namespace HamsterWars2.Presentation.Controllers
             var match = _service.MatchService.GetMatchById(id, trackChanges: false);
             return Ok(match);
         }
-        [HttpPost]//Tar in vinnar Id och förlorar Id i body
+        [HttpPost]//Tar in vinnar-Id och förlorar-Id i body
         public IActionResult CreateMatch([FromBody] MatchForCreationDto match)
         {
             var createdMatch = _service.MatchService.CreateMatch(match);
 
             return CreatedAtRoute("MatchById", new { id = createdMatch.Id }, createdMatch);
+        }
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteMatch(int id)
+        {
+            _service.MatchService.DeleteMatchById(id,trackChanges:false);
+            return Ok();
+        }
+        [HttpGet]
+        [Route("/matchwinners/{id:int}")]
+        public IActionResult GetAllMatchesForHamsterById(int id)
+        {
+            var hamsterMatches = _service.MatchService.GetAllMatchesByHamsterId(id, trackChanges:false);
+
+            return Ok(hamsterMatches);
         }
     }
 }

@@ -62,6 +62,17 @@ internal sealed class HamsterService : IHamsterService
         return hamsterDto;
     }
 
+    public IEnumerable<HamsterDto> GetLosers(bool trackChanges)
+    {
+        var hamsters = _repository.Hamster.GetAllHamsters(trackChanges).ToList();
+
+        var winners = hamsters.OrderByDescending(x => x.Losses).Take(5); //TODO: lägg till "Where(x=> x.isActive)" sen, och kanske om det bara är 3 matcher visa bara 3..
+
+        var hamsterDto = _mapper.Map<IEnumerable<HamsterDto>>(winners);
+
+        return hamsterDto;
+    }
+
     public HamsterDto GetRandomHamster(bool trackChanges)
     {
         var hamsters = _repository.Hamster.GetAllHamsters(trackChanges);
@@ -77,20 +88,23 @@ internal sealed class HamsterService : IHamsterService
         return hamsterDto;
     }
 
-    public void UpdateHamsterGames(int hamsterId, bool isWinner, bool trackChanges)
+    public IEnumerable<HamsterDto> GetWinners(bool trackChanges)
+    {
+        var hamsters = _repository.Hamster.GetAllHamsters(trackChanges).ToList();
+
+        var winners = hamsters.OrderByDescending(x=>x.Wins).Take(5); //TODO: lägg till "Where(x=> x.isActive)" sen, och kanske om det bara är 3 matcher visa bara 3..
+
+        var hamsterDto = _mapper.Map<IEnumerable<HamsterDto>>(winners);
+
+        return hamsterDto;
+    }
+
+    public void UpdateHamsterGames(int hamsterId, HamsterForUpdateDto hamsterForUpdateDto, bool trackChanges)
     {
         var hamster = _repository.Hamster.GetHamsterById(hamsterId, trackChanges);
 
-        if (isWinner)
-        {
-            hamster.Wins++;
-            hamster.Games++;
-        }
-        else
-        {
-            hamster.Losses++;
-            hamster.Games++;
-        }
+        //TODO: fortsätt här
+        _mapper.Map(hamsterForUpdateDto, hamster);
         _repository.Save();
     }
 }

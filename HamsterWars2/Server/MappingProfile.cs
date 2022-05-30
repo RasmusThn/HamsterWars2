@@ -12,6 +12,7 @@ namespace HamsterWars2
             CreateMap<Match, MatchDto>();
             CreateMap<HamsterForCreationDto, Hamster>();
             CreateMap<MatchForCreationDto, Match>();
+            CreateMap<HamsterForUpdateDto, Hamster>();
         }
     }
 }

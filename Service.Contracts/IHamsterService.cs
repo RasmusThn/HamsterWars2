@@ -10,5 +10,7 @@ public interface IHamsterService
     HamsterDto CreateHamster(HamsterForCreationDto hamster);
     HamsterDto GetRandomHamster(bool trackChanges);
     void DeleteHamsterById(int hamsterId, bool trackChanges);
-    void UpdateHamsterGames(int hamsterId, bool isWinner, bool trackChanges);
+    void UpdateHamsterGames(int hamsterId, HamsterForUpdateDto hamsterForUpdateDto, bool trackChanges);
+    IEnumerable<HamsterDto> GetWinners(bool trackChanges);
+    IEnumerable<HamsterDto> GetLosers(bool trackChanges);
 }

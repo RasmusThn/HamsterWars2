@@ -22,15 +22,15 @@ namespace HamsterWars2.Presentation.Controllers
         [HttpGet]//Tar fram alla Hamstrar
         public IActionResult GetHamsters()
         {
-            
+
             var hamsters = _service.HamsterService.GetAllHamsters(trackChanges: false);
 
-                return Ok(hamsters);
+            return Ok(hamsters);
         }
-        [HttpGet("{id:int}", Name ="HamsterById")] // Tar fram Hamster efter Id 
+        [HttpGet("{id:int}", Name = "HamsterById")] // Tar fram Hamster efter Id 
         public IActionResult GetHamster(int id)
         {
-            var hamster = _service.HamsterService.GetHamsterById(id,trackChanges:false);
+            var hamster = _service.HamsterService.GetHamsterById(id, trackChanges: false);
 
             return Ok(hamster);
         }
@@ -42,13 +42,13 @@ namespace HamsterWars2.Presentation.Controllers
                 return BadRequest("Hamster Object is null.");
             }
             var createdHamster = _service.HamsterService.CreateHamster(hamster);
-            return CreatedAtRoute("HamsterById", new {id = createdHamster.Id},createdHamster);
+            return CreatedAtRoute("HamsterById", new { id = createdHamster.Id }, createdHamster);
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult UpdateHamster(int id, [FromBody] bool isWinner) //TODO: Bool funkar inte i postman...
+        public IActionResult UpdateHamster(int id, [FromBody] HamsterForUpdateDto hamsterForUpdateDto)
         {
-            _service.HamsterService.UpdateHamsterGames(id, isWinner, trackChanges: true);
+            _service.HamsterService.UpdateHamsterGames(id, hamsterForUpdateDto, trackChanges: true);
             return NoContent();
         }
         [HttpDelete("{id:int}")]
@@ -58,23 +58,31 @@ namespace HamsterWars2.Presentation.Controllers
 
             return Ok();
         }
-        
-    }
-    [Route("api/hamsters/random")] //TODO: Behöver man göra såhär?
-    [ApiController]
-    public class RandomController : ControllerBase
-    {
-        private readonly IServiceManager _service;
-
-        public RandomController(IServiceManager service)
+        [HttpGet]
+        [Route("/winners")]
+        public IActionResult GetWinners()
         {
-            _service = service;
+            var hamsters = _service.HamsterService.GetWinners(trackChanges: false);
+
+            return Ok(hamsters);
         }
+        [HttpGet]
+        [Route("/losers")]
+        public IActionResult GetLosers()
+        {
+            var hamsters = _service.HamsterService.GetLosers(trackChanges: false);
+
+            return Ok(hamsters);
+        }
+        [HttpGet]
+        [Route("/random")]
         public IActionResult RandomHamster()
         {
             var hamster = _service.HamsterService.GetRandomHamster(trackChanges: false);
 
             return CreatedAtRoute("HamsterById", new { id = hamster.Id }, hamster);
         }
+
     }
+
 }

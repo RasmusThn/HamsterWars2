@@ -16,6 +16,8 @@ namespace Repository
 
         public void CreateMatch(Match match) => Create(match);
 
+        public void DeleteMatch(Match match) => Delete(match);
+
         public IEnumerable<Match> GetAllMatches(bool trackChanges) =>
         FindAll(trackChanges)
             .OrderBy(c => c.Id)
@@ -25,5 +27,7 @@ namespace Repository
         public Match GetMatchById(int matchId, bool trackChanges) =>
         FindByCondition(h => h.Id.Equals(matchId), trackChanges)
         .SingleOrDefault();
+
+
     }
 }

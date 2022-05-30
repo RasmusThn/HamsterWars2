@@ -49,4 +49,26 @@ internal sealed class MatchService : IMatchService
 
         return matchToReturn;
     }
+
+    public void DeleteMatchById(int matchId, bool trackChanges)
+    {
+        var match = _repository.Match.GetMatchById(matchId, trackChanges);
+        if (match is null)
+        {
+            throw new MatchNotFoundException(matchId);
+        }
+        _repository.Match.DeleteMatch(match);
+        _repository.Save();
+    }
+
+    public IEnumerable<MatchDto> GetAllMatchesByHamsterId(int hamsterId, bool trackChanges)
+    {
+        var matches = _repository.Match.GetAllMatches(trackChanges);
+
+        var hamsterMatches = matches.Where(x=>x.WinnerId.Equals(hamsterId)).ToList();
+        
+        var matchesToReturn = _mapper.Map<IEnumerable<MatchDto>>(hamsterMatches);
+
+        return matchesToReturn;
+    }
 }
