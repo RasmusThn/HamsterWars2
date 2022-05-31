@@ -4,6 +4,6 @@ namespace HamsterWars2Blazor.Service
 {
     public interface IMatchHttpService
     {
-        Task<IEnumerable<Match>> GetAllMatches();
+        Task<List<Match>> GetAllMatches();
     }
 }

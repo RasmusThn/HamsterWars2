@@ -1,5 +1,7 @@
-﻿@using Entities.Models
+﻿
+@using Entities.Models
 @using HamsterWars2Blazor.Service
+
 <h3>Component</h3>
 
 <div>
@@ -34,7 +36,7 @@
     </table>
      </div>
 @code {
-    public IEnumerable<Match> Matches { get; set; }
+    public List<Match> Matches { get; set; } = new List<Match>();
 
 
     [Inject]

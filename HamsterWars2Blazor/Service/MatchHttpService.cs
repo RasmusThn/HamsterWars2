@@ -7,19 +7,19 @@ namespace HamsterWars2Blazor.Service
     public class MatchHttpService : IMatchHttpService
     {
         private readonly HttpClient _client;
-        private readonly JsonSerializerOptions _options;
 
         public MatchHttpService(HttpClient httpClient)
         {
             _client = httpClient;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
-        public async Task<IEnumerable<Match>> GetAllMatches()
+        public async Task<List<Match>> GetAllMatches()
         {
-            var matches = await _client.GetFromJsonAsync<IEnumerable<Match>>("matches");
+            var matches = await _client.GetFromJsonAsync<IEnumerable<Match>>("api/matches");
+            ServiceCheckManager.NullCheck(matches);
 
-            return matches;
+            return matches.ToList();
         }
+
     }
 }

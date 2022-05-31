@@ -1,0 +1,40 @@
+﻿@using Entities.Models
+
+
+<a class="col btn col-sm-4" href="/profile/@Hamster.Id.ToString()/@url">
+<div class="card d-flex card-goodies card-hover" 
+style="background-color:yellowgreen">
+    <img class="card-img-top mt-2 hamster-bild-small " 
+    src="@Hamster.ImgName" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">@Hamster.Name</h5>
+        <p class="card-text">
+            Wins: @Hamster.Wins
+            <br />
+            Defeats: @Hamster.Losses
+            <br />
+            Games: @Hamster.Games
+            @if (IsProfile)
+            {
+                <span>
+                    <br />
+                    Age: @Hamster.Age
+                    <br />
+                    Favourite Food: @Hamster.FavFood
+                    <br />
+                    Loves: @Hamster.Loves
+                </span>
+            }
+        </p>
+    </div>
+</div>
+
+</a>
+
+@code {
+    [Parameter]
+    public Hamster Hamster { get; set; }
+    [Parameter]
+    public bool IsProfile { get; set; } = false;
+    private string url = "battle";
+}

@@ -1,0 +1,24 @@
+﻿@page "/delete"
+@using HamsterWars2Blazor.Service
+<h3>Delete Hamster by Id</h3>
+
+<div class="form-group">
+    <Label>Id Number</Label>
+    <select @bind="_number" class="form-select-sm">
+        @for (var i = 1; i <= 40; i++) //hård-kodat för dem 40 bävrar vi har 
+                    {
+                        <option value="@i">@i</option>
+                    }
+    </select>
+    <button class="btn btn-primary" @onclick="SubmitDelete">Search</button>
+</div>
+@code {
+    private int _number;
+    [Inject]
+    public IHamsterHttpService HttpService{ get; set; }
+
+    public void SubmitDelete()
+    {
+        HttpService.DeleteHamster(_number);
+    }
+}

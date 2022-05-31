@@ -1,0 +1,36 @@
+﻿@page "/gallery"
+
+@using Entities.Models
+@using HamsterWars2Blazor.Service
+<h3>AllHamstersComponents</h3>
+<table class="table">
+    <thead>
+    <tr>
+    <th>Name</th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var hamster in Hamsters)
+    {
+    <tr>
+    <td>@hamster.Name</td>
+    <td><img src="@hamster.ImgName"></td>
+    </tr>
+    
+    }
+    </tbody>
+    </table>
+@code {
+
+     public List<Hamster> Hamsters { get; set; } = new List<Hamster>();
+
+
+    [Inject]
+    public IHamsterHttpService HamsterHttpService{ get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Hamsters = await HamsterHttpService.GetAllHamsters();
+    }
+}

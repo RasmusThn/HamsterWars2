@@ -1,18 +1,51 @@
 ﻿@using Entities.Models
 @using HamsterWars2Blazor.Service
-<h3>Component</h3>
+<h3>Get Hamster by Id</h3>
 
-<div>@hamster.Name</div>
+<div class="form-group">
+    <Label>Id Number</Label>
+    <select @bind="_number" class="form-select-sm">
+        @for (var i = 1; i <= 40; i++) //hård-kodat för dem 40 bävrar vi har 
+                    {
+                        <option value="@i">@i</option>
+                    }
+    </select>
+    <button class="btn btn-primary" @onclick="SubmitSearch">Search</button>
+</div>
+
+@if (@hamster is null)
+{
+    <p>Null</p>
+}
+else
+{
+    
+<div>
+    <span>
+    
+        @hamster.Name<br>
+        @hamster.Age<br>
+        @hamster.Wins<br>
+        @hamster.Losses<br>
+        @hamster.Games<br>
+        @hamster.Loves<br>
+        @hamster.FavFood<br>
+        @hamster.FavFood<br>
+        <img src="@hamster.ImgName">
+    </span>
+    </div>
+}
 
 @code {
-    public Hamster hamster { get; set; }
+    public Hamster? hamster { get; set; }
+    private int _number;
 
     [Inject]
     public IHamsterHttpService HttpService{ get; set; }
 
-     protected override async Task OnInitializedAsync()
+    public async void SubmitSearch()
     {
-        hamster = await HttpService.GetHamsterById(2);
-       
+        hamster = await HttpService.GetHamsterById(_number);
+        StateHasChanged();
     }
 }

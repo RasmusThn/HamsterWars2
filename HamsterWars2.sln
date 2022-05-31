@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWars2", "HamsterWars2\Server\HamsterWars2.csproj", "{299A03A4-488C-4DB5-AFF9-B3515A4EF60B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "HamsterWars2\Shared\Shared.csproj", "{EB8404FB-E473-4AF0-BD76-F3285EF0ED19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedDtos", "HamsterWars2\Shared\SharedDtos.csproj", "{EB8404FB-E473-4AF0-BD76-F3285EF0ED19}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{832BCFEE-CF35-4852-A458-E1DFAD834271}"
 EndProject

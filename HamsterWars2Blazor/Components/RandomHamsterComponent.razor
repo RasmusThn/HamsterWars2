@@ -1,0 +1,24 @@
+﻿@page "/random"
+@using Entities.Models
+@using HamsterWars2Blazor.Service
+<h3>Generate Random Hamster from DB</h3>
+<button class="btn btn-primary" @onclick="GenerateRandomHamster">Random</button>
+@if (hamster is null)
+{
+    <p>No Hamster generated yet</p>
+}
+else
+{
+    <HamsterComponent Hamster="hamster"></HamsterComponent>
+}
+@code {
+    public Hamster hamster { get; set; }
+    [Inject]
+    public IHamsterHttpService HttpService{ get; set; }
+
+    public async void GenerateRandomHamster()
+    {
+        hamster = await HttpService.GetRandomHamster();
+         StateHasChanged();
+    }
+}
