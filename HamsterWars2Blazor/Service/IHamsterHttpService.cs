@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Shared.DataTransferObjects;
 
 namespace HamsterWars2Blazor.Service
 {
@@ -6,7 +7,7 @@ namespace HamsterWars2Blazor.Service
     {
         Task<Hamster> GetHamsterById(int id);
         Task<List<Hamster>> GetAllHamsters();
-        Task CreateHamster(Hamster hamster);
+        Task CreateHamster(HamsterForCreationDto hamster);
         Task DeleteHamster(int id);
         Task UpdateHamster(Hamster hamster);
         Task<List<Hamster>> GetTop5Winners();

@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Shared.DataTransferObjects;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -12,9 +13,9 @@ namespace HamsterWars2Blazor.Service
             _client = httpClient;
         }
 
-        public async Task CreateHamster(Hamster hamster)
+        public async Task CreateHamster(HamsterForCreationDto hamster)
         {
-           var respsonse = await _client.PostAsJsonAsync<Hamster>("api/hamsters",hamster);
+           var respsonse = await _client.PostAsJsonAsync<HamsterForCreationDto>("api/hamsters",hamster);
             ServiceCheckManager.ResponseCheck(respsonse);            
         }
 
