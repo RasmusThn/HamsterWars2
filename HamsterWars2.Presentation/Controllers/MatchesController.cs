@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HamsterWars2.Presentation.ActionFilters;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System;
@@ -20,36 +21,37 @@ namespace HamsterWars2.Presentation.Controllers
             _service = service;
         }
         [HttpGet]
-        public IActionResult GetMatches()
+        public async Task<IActionResult> GetMatches()
         {
-            var matches = _service.MatchService.GetAllMatches(trackChanges: false);
+            var matches = await _service.MatchService.GetAllMatchesAsync(trackChanges: false);
 
             return Ok(matches);
         }
         [HttpGet("{id:int}", Name ="MatchById")]
-        public IActionResult GetMatch(int id)
+        public async Task<IActionResult> GetMatch(int id)
         {
-            var match = _service.MatchService.GetMatchById(id, trackChanges: false);
+            var match = await _service.MatchService.GetMatchByIdAsync(id, trackChanges: false);
             return Ok(match);
         }
         [HttpPost]//Tar in vinnar-Id och förlorar-Id i body
-        public IActionResult CreateMatch([FromBody] MatchForCreationDto match)
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> CreateMatch([FromBody] MatchForCreationDto match)
         {
-            var createdMatch = _service.MatchService.CreateMatch(match);
+            var createdMatch = await _service.MatchService.CreateMatchAsync(match);
 
             return CreatedAtRoute("MatchById", new { id = createdMatch.Id }, createdMatch);
         }
         [HttpDelete("{id:int}")]
-        public IActionResult DeleteMatch(int id)
+        public async Task<IActionResult> DeleteMatch(int id)
         {
-            _service.MatchService.DeleteMatchById(id,trackChanges:false);
+            await _service.MatchService.DeleteMatchByIdAsync(id,trackChanges:false);
             return Ok();
         }
         [HttpGet]
         [Route("/matchwinners/{id:int}")]
-        public IActionResult GetAllMatchesForHamsterById(int id)
+        public async Task<IActionResult> GetAllMatchesForHamsterById(int id)
         {
-            var hamsterMatches = _service.MatchService.GetAllMatchesByHamsterId(id, trackChanges:false);
+            var hamsterMatches = await _service.MatchService.GetAllMatchesByHamsterIdAsync(id, trackChanges:false);
 
             return Ok(hamsterMatches);
         }

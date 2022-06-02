@@ -17,5 +17,5 @@ public sealed class RepositoryManager : IRepositoryManager
     }
     public IHamsterRepository Hamster => _hamsterRepository.Value;
     public IMatchRepository Match => _matchRepository.Value;
-    public void Save() => _repositoryContext.SaveChanges();
+    public async Task SaveAsync() => _repositoryContext.SaveChanges();
 }

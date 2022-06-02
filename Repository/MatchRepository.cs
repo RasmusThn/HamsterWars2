@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,15 +19,15 @@ namespace Repository
 
         public void DeleteMatch(Match match) => Delete(match);
 
-        public IEnumerable<Match> GetAllMatches(bool trackChanges) =>
-        FindAll(trackChanges)
-            .OrderBy(c => c.Id)
-            .ToList();
+        public async Task<IEnumerable<Match>> GetAllMatchesAsync(bool trackChanges) =>
+        await FindAll(trackChanges)
+            .OrderBy(c =>c.Id)
+            .ToListAsync();
 
 
-        public Match GetMatchById(int matchId, bool trackChanges) =>
-        FindByCondition(h => h.Id.Equals(matchId), trackChanges)
-        .SingleOrDefault();
+        public async Task<Match> GetMatchByIdAsync(int matchId, bool trackChanges) =>
+       await FindByCondition(h => h.Id.Equals(matchId), trackChanges)
+        .SingleOrDefaultAsync();
 
 
     }

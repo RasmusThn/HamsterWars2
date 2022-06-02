@@ -20,55 +20,59 @@ internal sealed class MatchService : IMatchService
         _mapper = mapper;
     }
 
-    public MatchDto GetMatchById(int matchId, bool trackChanges)
+    public async Task<MatchDto> GetMatchByIdAsync(int matchId, bool trackChanges)
     {
-        var match = _repository.Match.GetMatchById(matchId, trackChanges);
-        if (match is null)
-        {
-            throw new MatchNotFoundException(matchId);
-        }
+        Match? match = await GetMatchAndCheckIfExists(matchId, trackChanges);
         var matchDto = _mapper.Map<MatchDto>(match);
         return matchDto;
     }
 
-    public IEnumerable<MatchDto> GetAllMatches(bool trackChanges)
+   
+
+    public async Task<IEnumerable<MatchDto>> GetAllMatchesAsync(bool trackChanges)
     {
-        var matches = _repository.Match.GetAllMatches(trackChanges);
+        var matches = await _repository.Match.GetAllMatchesAsync(trackChanges);
         var matchesDto = _mapper.Map<IEnumerable<MatchDto>>(matches);
 
         return matchesDto;
     }
 
-    public MatchDto CreateMatch(MatchForCreationDto match)
+    public async Task<MatchDto> CreateMatchAsync(MatchForCreationDto match)
     {
         var matchEntity = _mapper.Map<Match>(match);
         _repository.Match.CreateMatch(matchEntity);
-        _repository.Save();
+        await _repository.SaveAsync();
 
         var matchToReturn = _mapper.Map<MatchDto>(matchEntity);
 
         return matchToReturn;
     }
 
-    public void DeleteMatchById(int matchId, bool trackChanges)
+    public async Task DeleteMatchByIdAsync(int matchId, bool trackChanges)
     {
-        var match = _repository.Match.GetMatchById(matchId, trackChanges);
-        if (match is null)
-        {
-            throw new MatchNotFoundException(matchId);
-        }
+        Match? match = await GetMatchAndCheckIfExists(matchId, trackChanges);
         _repository.Match.DeleteMatch(match);
-        _repository.Save();
+        await _repository.SaveAsync();
     }
 
-    public IEnumerable<MatchDto> GetAllMatchesByHamsterId(int hamsterId, bool trackChanges)
+    public async Task<IEnumerable<MatchDto>> GetAllMatchesByHamsterIdAsync(int hamsterId, bool trackChanges)
     {
-        var matches = _repository.Match.GetAllMatches(trackChanges);
+        var matches = await _repository.Match.GetAllMatchesAsync(trackChanges);
 
         var hamsterMatches = matches.Where(x=>x.WinnerId.Equals(hamsterId)).ToList();
         
         var matchesToReturn = _mapper.Map<IEnumerable<MatchDto>>(hamsterMatches);
 
         return matchesToReturn;
+    } 
+    private async Task<Match> GetMatchAndCheckIfExists(int matchId, bool trackChanges)
+    {
+        var match = await _repository.Match.GetMatchByIdAsync(matchId, trackChanges);
+        if (match is null)
+        {
+            throw new MatchNotFoundException(matchId);
+        }
+
+        return match;
     }
 }

@@ -12,12 +12,12 @@ public class HamsterRepository : RepositoryBase<Hamster>, IHamsterRepository
     public void CreateHamster(Hamster hamster) => Create(hamster); 
     public void DeleteHamster(Hamster hamster) => Delete(hamster);
 
-    public IEnumerable<Hamster> GetAllHamsters(bool trackChanges) => 
+    public async Task<IEnumerable<Hamster>> GetAllHamstersAsync(bool trackChanges) => 
         FindAll(trackChanges)
             .OrderBy(c => c.Name)
             .ToList();
 
-    public Hamster GetHamsterById(int hamsterId, bool trackChanges) =>
+    public async Task<Hamster> GetHamsterByIdAsync(int hamsterId, bool trackChanges) =>
         FindByCondition(h => h.Id.Equals(hamsterId), trackChanges)
         .SingleOrDefault();
 }

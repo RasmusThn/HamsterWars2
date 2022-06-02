@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HamsterWars2.Presentation.ActionFilters;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HamsterWars2.Presentation.Controllers
 {
@@ -20,65 +16,68 @@ namespace HamsterWars2.Presentation.Controllers
             _service = service;
         }
         [HttpGet]//Tar fram alla Hamstrar
-        public IActionResult GetHamsters()
+        public async Task<IActionResult> GetHamsters()
         {
 
-            var hamsters = _service.HamsterService.GetAllHamsters(trackChanges: false);
+            var hamsters = await _service.HamsterService.GetAllHamstersAsync(trackChanges: false);
 
             return Ok(hamsters);
         }
         [HttpGet("{id:int}", Name = "HamsterById")] // Tar fram Hamster efter Id 
-        public IActionResult GetHamster(int id)
+        public async Task<IActionResult> GetHamster(int id)
         {
-            var hamster = _service.HamsterService.GetHamsterById(id, trackChanges: false);
+            var hamster = await _service.HamsterService.GetHamsterByIdAsync(id, trackChanges: false);
 
             return Ok(hamster);
         }
-        [HttpPost] //Skapar ny hamster 
-        public IActionResult CreateHamster([FromBody] HamsterForCreationDto hamster)
+        [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]//Skapar ny hamster 
+        public async Task<IActionResult> CreateHamster([FromBody] HamsterForCreationDto hamster)
         {
-            if (hamster is null)
-            {
-                return BadRequest("Hamster Object is null.");
-            }
-            var createdHamster = _service.HamsterService.CreateHamster(hamster);
+            //if (hamster is null)
+            //{
+            //    return BadRequest("Hamster Object is null.");
+            //}
+            var createdHamster = await _service.HamsterService.CreateHamsterAsync(hamster);
+
             return CreatedAtRoute("HamsterById", new { id = createdHamster.Id }, createdHamster);
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult UpdateHamster(int id, [FromBody] HamsterForUpdateDto hamsterForUpdateDto)
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> UpdateHamster(int id, [FromBody] HamsterForUpdateDto hamsterForUpdateDto)
         {
-            _service.HamsterService.UpdateHamsterGames(id, hamsterForUpdateDto, trackChanges: true);
+           await _service.HamsterService.UpdateHamsterGamesAsync(id, hamsterForUpdateDto, trackChanges: true);
             return NoContent();
         }
         [HttpDelete("{id:int}")]
-        public IActionResult DeleteHamster(int id)
+        public async Task<IActionResult> DeleteHamster(int id)
         {
-            _service.HamsterService.DeleteHamsterById(id, trackChanges: true);
+            await _service.HamsterService.DeleteHamsterByIdAsync(id, trackChanges: true);
 
             return Ok();
         }
         [HttpGet]
         [Route("/winners")]
-        public IActionResult GetWinners()
+        public async Task<IActionResult> GetWinners()
         {
-            var hamsters = _service.HamsterService.GetWinners(trackChanges: false);
+            var hamsters = await _service.HamsterService.GetWinnersAsync(trackChanges: false);
 
             return Ok(hamsters);
         }
         [HttpGet]
         [Route("/losers")]
-        public IActionResult GetLosers()
+        public async Task<IActionResult> GetLosers()
         {
-            var hamsters = _service.HamsterService.GetLosers(trackChanges: false);
+            var hamsters = await _service.HamsterService.GetLosersAsync(trackChanges: false);
 
             return Ok(hamsters);
         }
         [HttpGet]
         [Route("/random")]
-        public IActionResult RandomHamster()
+        public async Task<IActionResult> RandomHamster()
         {
-            var hamster = _service.HamsterService.GetRandomHamster(trackChanges: false);
+            var hamster = await _service.HamsterService.GetRandomHamsterAsync(trackChanges: false);
 
             return CreatedAtRoute("HamsterById", new { id = hamster.Id }, hamster);
         }

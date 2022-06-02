@@ -4,10 +4,10 @@ namespace Service.Contracts;
 
 public interface IMatchService
 {
-    IEnumerable<MatchDto> GetAllMatches(bool trackChanges);
-    MatchDto GetMatchById(int matchId, bool trackChanges);
-    MatchDto CreateMatch(MatchForCreationDto match);
+    Task<IEnumerable<MatchDto>> GetAllMatchesAsync(bool trackChanges);
+    Task<MatchDto> GetMatchByIdAsync(int matchId, bool trackChanges);
+    Task<MatchDto> CreateMatchAsync(MatchForCreationDto match);
 
-    void DeleteMatchById(int matchId, bool trackChanges);
-    IEnumerable<MatchDto> GetAllMatchesByHamsterId(int hamsterId, bool trackChanges);
+    Task DeleteMatchByIdAsync(int matchId, bool trackChanges);
+    Task<IEnumerable<MatchDto>> GetAllMatchesByHamsterIdAsync(int hamsterId, bool trackChanges);
 }

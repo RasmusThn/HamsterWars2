@@ -2,6 +2,7 @@ using HamsterWars2.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 using Contracts;
+using HamsterWars2.Presentation.ActionFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,8 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddScoped<ValidationFilterAttribute>();
 
 builder.Services.AddControllers(config =>
 {
