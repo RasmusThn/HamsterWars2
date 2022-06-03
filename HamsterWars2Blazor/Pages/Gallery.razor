@@ -3,24 +3,21 @@
 @using Entities.Models
 @using HamsterWars2Blazor.Service
 <h3>AllHamstersComponents</h3>
-<table class="table">
+@*<table class="table">
     <thead>
     <tr>
+    <th>Id</th>
     <th>Name</th>
-    <th></th>
     </tr>
     </thead>
-    <tbody>
+    <tbody>*@
     @foreach (var hamster in Hamsters)
     {
-    <tr>
-    <td>@hamster.Name</td>
-    <td><img src="@hamster.ImgName"></td>
-    </tr>
+    <HamsterComponent Hamster="@hamster"></HamsterComponent>
     
     }
-    </tbody>
-    </table>
+    @*</tbody>
+    </table>*@
 @code {
 
      public List<Hamster> Hamsters { get; set; } = new List<Hamster>();

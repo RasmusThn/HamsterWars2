@@ -1,24 +1,35 @@
 ﻿@page "/delete"
+@using Entities.Models
 @using HamsterWars2Blazor.Service
 <h3>Delete Hamster by Id</h3>
 
 <div class="form-group">
-    <Label>Id Number</Label>
+    <label>Id Number</label>
     <select @bind="_number" class="form-select-sm">
-        @for (var i = 1; i <= 40; i++) //hård-kodat för dem 40 bävrar vi har 
-                    {
-                        <option value="@i">@i</option>
-                    }
+@if (Hamsters is not null)
+{
+ @foreach (var hamster in Hamsters)
+{
+    <option value="@hamster.Id">@hamster.Id</option>
+}   
+}
+
     </select>
-    <button class="btn btn-primary" @onclick="SubmitDelete">Search</button>
+    <button class="btn btn-primary" @onclick="SubmitDelete">Delete</button>
 </div>
 @code {
+    public List<Hamster> Hamsters { get; set; }
     private int _number;
     [Inject]
     public IHamsterHttpService HttpService{ get; set; }
-
+    protected override async Task OnInitializedAsync()
+    {
+        Hamsters = await HttpService.GetAllHamsters();
+    }
     public void SubmitDelete()
     {
         HttpService.DeleteHamster(_number);
+        StateHasChanged(); //TODO: funkar ej
+
     }
 }

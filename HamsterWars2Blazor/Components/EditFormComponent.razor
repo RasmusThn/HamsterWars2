@@ -1,0 +1,108 @@
+﻿@using Entities.Models
+@using HamsterWars2Blazor.Service
+
+<h3>EditFormComponent</h3>
+
+<EditForm Model="@hamster" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+
+        <label for="@hamster.Name">Name</label>
+        <ValidationMessage For="@(() => hamster.Name)" />
+        <input @bind-value="@hamster.Name" type="text" class="form-control">
+
+        <label for="@hamster.Age">Age</label>
+        <ValidationMessage For="@(() => hamster.Age)" />
+        <select @bind="@hamster.Age" class="form-select">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <label for="@hamster.FavFood">Favourite Food</label>
+        <ValidationMessage For="@(() => hamster.FavFood)" />
+        <input @bind-value="@hamster.FavFood" type="text" class="form-control">
+
+        <label for="@hamster.Loves">Loves</label>
+        <ValidationMessage For="@(() => hamster.Loves)" />
+        <input @bind-value="@hamster.Loves" type="text" class="form-control">
+
+        @if (IsCreateMode)
+        {
+            <label for="@hamster.ImgName">Choose Image</label>
+            <div class="input-group mb-3">
+                <select @onchange="ShowImg" class="form-control">
+                    @for (var i = 1; i <= 40; i++) //hård-kodat för dem 40 statiska bilder vi har
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
+
+            <div>
+                <img src="@CompleteSrc" />
+            </div>
+        }
+
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@if (IsSuccess)
+{
+    <h3 class="text-success p-2">@FormSubmitMessage</h3>
+}
+else
+{
+    <h3 class="text-danger p-2">@FormSubmitMessage</h3>
+}
+
+@code {
+    //TODO: Lägg till parameter för isCreate
+    [Parameter]
+    public bool IsCreateMode { get; set; }
+    private string? Num { get; set; }
+    private string? CompleteSrc { get; set; }
+    private readonly string href = "/images/hamsters/hamster-";
+    private bool IsSuccess { get; set; }
+    [Parameter]
+    public Hamster? hamster { get; set; } = new Hamster();
+    public string? FormSubmitMessage { get; set; }
+    [Inject]
+    public IHamsterHttpService HttpService { get; set; }
+
+    public void HandleValidSubmit()
+    {
+        if (IsCreateMode)
+        {
+            hamster.ImgName = CompleteSrc;
+            HttpService.CreateHamster(hamster);
+            hamster = new Hamster();
+        }
+        else
+        {
+            HttpService.UpdateHamster(hamster);
+        }
+        FormSubmitMessage = "Success!";
+        IsSuccess = true;
+    }
+    public void HandleInvalidSubmit()
+    {
+        FormSubmitMessage = "Invalid Data";
+        IsSuccess = false;
+    }
+    private void ShowImg(ChangeEventArgs e)
+    {
+        Num = e.Value as string;
+        CompleteSrc = GetJpgSrc();
+    }
+    private string GetJpgSrc()
+    {
+        string src = href + Num + ".jpg";
+        return src;
+    }
+
+}

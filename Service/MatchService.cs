@@ -26,9 +26,6 @@ internal sealed class MatchService : IMatchService
         var matchDto = _mapper.Map<MatchDto>(match);
         return matchDto;
     }
-
-   
-
     public async Task<IEnumerable<MatchDto>> GetAllMatchesAsync(bool trackChanges)
     {
         var matches = await _repository.Match.GetAllMatchesAsync(trackChanges);
@@ -36,7 +33,6 @@ internal sealed class MatchService : IMatchService
 
         return matchesDto;
     }
-
     public async Task<MatchDto> CreateMatchAsync(MatchForCreationDto match)
     {
         var matchEntity = _mapper.Map<Match>(match);
@@ -47,14 +43,12 @@ internal sealed class MatchService : IMatchService
 
         return matchToReturn;
     }
-
     public async Task DeleteMatchByIdAsync(int matchId, bool trackChanges)
     {
         Match? match = await GetMatchAndCheckIfExists(matchId, trackChanges);
         _repository.Match.DeleteMatch(match);
         await _repository.SaveAsync();
     }
-
     public async Task<IEnumerable<MatchDto>> GetAllMatchesByHamsterIdAsync(int hamsterId, bool trackChanges)
     {
         var matches = await _repository.Match.GetAllMatchesAsync(trackChanges);
@@ -65,6 +59,7 @@ internal sealed class MatchService : IMatchService
 
         return matchesToReturn;
     } 
+
     private async Task<Match> GetMatchAndCheckIfExists(int matchId, bool trackChanges)
     {
         var match = await _repository.Match.GetMatchByIdAsync(matchId, trackChanges);

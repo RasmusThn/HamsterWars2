@@ -30,16 +30,12 @@ internal sealed class HamsterService : IHamsterService
 
         return hamsterToReturn;
     }
-
     public async Task DeleteHamsterByIdAsync(int hamsterId, bool trackChanges)
     {
         Hamster? hamster = await GetHamsterAndCheckIfExists(hamsterId, trackChanges);
         _repository.Hamster.DeleteHamster(hamster);
         await _repository.SaveAsync();
     }
-
-
-
     public async Task<IEnumerable<HamsterDto>> GetAllHamstersAsync(bool trackChanges)
     {
         var hamsters = await _repository.Hamster.GetAllHamstersAsync(trackChanges);
@@ -47,7 +43,6 @@ internal sealed class HamsterService : IHamsterService
 
         return hamstersDto;
     }
-
     public async Task<HamsterDto> GetHamsterByIdAsync(int hamsterId, bool trackChanges)
     {
         Hamster? hamster = await GetHamsterAndCheckIfExists(hamsterId, trackChanges);
@@ -55,18 +50,20 @@ internal sealed class HamsterService : IHamsterService
         var hamsterDto = _mapper.Map<HamsterDto>(hamster);
         return hamsterDto;
     }
-
     public async Task<IEnumerable<HamsterDto>> GetLosersAsync(bool trackChanges)
     {
         var hamsters = await _repository.Hamster.GetAllHamstersAsync(trackChanges);
 
-        var winners = hamsters.OrderByDescending(x => x.Losses).Take(5); //TODO: lägg till "Where(x=> x.isActive)" sen, och kanske om det bara är 3 matcher visa bara 3..
+        var winners = hamsters
+            .Where(x=> x.isActive)
+            .OrderByDescending(x => x.Losses)
+            .Take(5)
+            .Where(x => x.Losses > 0);
 
         var hamsterDto = _mapper.Map<IEnumerable<HamsterDto>>(winners);
 
         return hamsterDto;
     }
-
     public async Task<HamsterDto> GetRandomHamsterAsync(bool trackChanges)
     {
         var hamsters = await _repository.Hamster.GetAllHamstersAsync(trackChanges); 
@@ -80,18 +77,20 @@ internal sealed class HamsterService : IHamsterService
 
         return hamsterDto;
     }
-
     public async Task<IEnumerable<HamsterDto>> GetWinnersAsync(bool trackChanges)
     {
         var hamsters = await _repository.Hamster.GetAllHamstersAsync(trackChanges); //TODO: Kanske behöver vara Tolist();
 
-        var winners = hamsters.OrderByDescending(x => x.Wins).Take(5); //TODO: lägg till "Where(x=> x.isActive)" sen, och kanske om det bara är 3 matcher visa bara 3..
+        var winners = hamsters
+            .Where(x=>x.isActive)
+            .OrderByDescending(x => x.Wins)
+            .Take(5)
+            .Where(x => x.Wins > 0); 
 
         var hamsterDto = _mapper.Map<IEnumerable<HamsterDto>>(winners);
 
         return hamsterDto;
     }
-
     public async Task UpdateHamsterGamesAsync(int hamsterId, HamsterForUpdateDto hamsterForUpdateDto, bool trackChanges)
     {
         Hamster? hamster = await GetHamsterAndCheckIfExists(hamsterId, trackChanges);
