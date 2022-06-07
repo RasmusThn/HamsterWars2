@@ -5,20 +5,20 @@
 <button class="btn btn-primary" @onclick="GenerateRandomHamster">Random</button>
 @if (hamster is null)
 {
-    <p>No Hamster generated yet</p>
+    <p>Hamster not generated yet</p>
 }
 else
 {
-    <HamsterComponent Hamster="hamster"></HamsterComponent>
+    <HamsterComponent Hamster="@hamster"></HamsterComponent>
 }
 @code {
     public Hamster hamster { get; set; }
     [Inject]
     public IHamsterHttpService HttpService{ get; set; }
 
-    public async void GenerateRandomHamster()
+    public async Task GenerateRandomHamster()
     {
         hamster = await HttpService.GetRandomHamster();
-         StateHasChanged();
+        StateHasChanged();
     }
 }

@@ -42,7 +42,7 @@ namespace HamsterWars2Blazor.Service
         }
         public async Task<Hamster> GetRandomHamster()
         {
-            var rndHamster = await _client.GetFromJsonAsync<Hamster>("random");
+            var rndHamster = await _client.GetFromJsonAsync<Hamster>("/random");
             return rndHamster;
         }
         public async Task<List<Hamster>> GetTop5Losers()

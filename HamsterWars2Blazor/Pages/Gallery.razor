@@ -2,26 +2,30 @@
 
 @using Entities.Models
 @using HamsterWars2Blazor.Service
-<h3>AllHamstersComponents</h3>
-@*<table class="table">
-    <thead>
-    <tr>
-    <th>Id</th>
-    <th>Name</th>
-    </tr>
-    </thead>
-    <tbody>*@
+
+<h3>All Hamsters</h3>
+
     @foreach (var hamster in Hamsters)
     {
-    <HamsterComponent Hamster="@hamster"></HamsterComponent>
-    
+   @if (hamster.isActive)
+        {
+            <a class="col col-sm-2 btn" href="/profile/@hamster.Id">
+                <div class="card card-goodies card-hover" style="background-color:cadetblue">
+                    <div class="card-title">
+                        @hamster.Name
+                    </div>
+                    <div class="card-img">
+                        <img class="hamster-bild-small" src="@hamster.ImgName">
+                    </div>
+                </div>
+            </a>
+        }
     }
-    @*</tbody>
-    </table>*@
+   
 @code {
 
      public List<Hamster> Hamsters { get; set; } = new List<Hamster>();
-
+     private readonly string url = "gallery";
 
     [Inject]
     public IHamsterHttpService HamsterHttpService{ get; set; }

@@ -2,8 +2,8 @@
 @using HamsterWars2Blazor.Pages
 
 
-@*<a class="col btn col-sm-4" href="/profile/@Hamster.Id.ToString()/@url">*@
-<div @onclick="GoToProfile" class=" card d-flex card-goodies card-hover btn col col-sm-4" 
+<a class="col btn col-sm-4" href="/profile/@hamster.Id/@url">
+<div class=" card d-flex card-goodies card-hover btn col col-sm-4" 
 style="background-color:yellowgreen">
     <img class="card-img-top mt-2 hamster-bild-small " 
     src="@hamster.ImgName" alt="Card image cap">
@@ -29,7 +29,7 @@ style="background-color:yellowgreen">
         </p>
     </div>
 </div>
-
+</a>
 
 
 @code {
@@ -37,12 +37,5 @@ style="background-color:yellowgreen">
     public Hamster hamster { get; set; }
     [Parameter]
     public bool IsProfile { get; set; } = false;
-    [Inject]
-    public NavigationManager navigation{ get; set; }
-
-    public void GoToProfile()
-    {
-        navigation.NavigateTo($"/profile/{hamster.Id}");
-        
-    }
+    private string url = "battle";
 }

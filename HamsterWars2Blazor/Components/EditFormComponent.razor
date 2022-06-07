@@ -88,6 +88,7 @@ else
         }
         FormSubmitMessage = "Success!";
         IsSuccess = true;
+        StateHasChanged(); //TODO:Varför laddar den inte om?
     }
     public void HandleInvalidSubmit()
     {

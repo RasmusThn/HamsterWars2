@@ -55,5 +55,6 @@ namespace HamsterWars2.Presentation.Controllers
 
             return Ok(hamsterMatches);
         }
+        //TODO: En likadan fast för förlorade matcher.
     }
 }

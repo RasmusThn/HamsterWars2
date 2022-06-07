@@ -79,7 +79,7 @@ namespace HamsterWars2.Presentation.Controllers
         {
             var hamster = await _service.HamsterService.GetRandomHamsterAsync(trackChanges: false);
 
-            return CreatedAtRoute("HamsterById", new { id = hamster.Id }, hamster);
+            return Ok(hamster);
         }
 
     }

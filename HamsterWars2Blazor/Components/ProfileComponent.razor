@@ -1,0 +1,45 @@
+﻿
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Profile: @hamster.Name</PageTitle>
+
+<div class="justify-content-center text-center">
+
+   
+        <h3><strong>@hamster.Name 's Profile</strong></h3>
+        <div class="row-cols-sm-2 col">
+            <HamsterComponent Hamster="@hamster" IsProfile="Isprofile"></HamsterComponent>
+        </div>
+
+        <div class="row-cols-sm">
+
+            <button @onclick="GoBack" class="btn btn-secondary">Back</button>
+            <button @onclick="Edit" class="btn btn-dark">@_showOrHideEdit Edit</button>
+            <button @onclick="OpenDeleteDialog" class="btn btn-danger">Delete</button>
+            <button @onclick="ShowMatches" class="btn btn-primary">@_ShowHide Matches</button>
+        </div>
+        <div class="row-cols-sm-auto">
+
+            @if (_showMatches)
+            {
+
+                <MatchComponent Hamster="@hamster"></MatchComponent>
+            }
+            @if (_showEdit)
+           {
+               <EditFormComponent hamster="@hamster"></EditFormComponent>
+           }
+        </div>
+    
+</div>
+
+@*---Modal----*@
+@if (DeleteDialogOpen)
+{
+    <ModalComponent hamster="@hamster"
+                OnClose="@OnDeleteDialogClose">
+    </ModalComponent>
+}
+
+
+

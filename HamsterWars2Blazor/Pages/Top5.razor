@@ -10,7 +10,7 @@
     <h4>Top 5 Winners</h4>
     @foreach (var hamster in WinHamsters)
    {
-       <HamsterComponent Hamster="hamster"></HamsterComponent>
+       <HamsterComponent Hamster="@hamster"></HamsterComponent>
    }
    </div>
 
@@ -18,7 +18,7 @@
    <h4>Top 5 Losers</h4>
    @foreach (var hamster in LossHamsters)
   {
-      <HamsterComponent Hamster="hamster"></HamsterComponent>
+      <HamsterComponent Hamster="@hamster"></HamsterComponent>
   }
 </div>
 }

@@ -1,59 +1,79 @@
 ﻿using Entities.Models;
 using HamsterWars2Blazor.Service;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
-namespace HamsterWars2Blazor.Pages
+namespace HamsterWars2Blazor.Components
 {
-    public partial class Profile : ComponentBase
+    public partial class ProfileComponent : ComponentBase
     {
 
 
         [Parameter]
         public int Id { get; set; }
         [Parameter]
-        public string Oldpage { get; set; }
-        [Parameter]
         public Hamster hamster { get; set; }
         private bool _showMatches = false;
+        private bool _showEdit = false;
         private string _ShowHide = "Show";
+        private string _showOrHideEdit = "Show";
         private bool Isprofile { get; set; } = true;
         public bool DeleteDialogOpen { get; set; }
         [Inject]
         public IHamsterHttpService httpService { get; set; }
-        protected override async void OnInitialized()
-        {
-           
-           hamster = await httpService.GetHamsterById(Id);
 
-        }
-        public void Delete(Hamster hamster)
+        [Inject]
+        NavigationManager navigation { get; set; }
+        
+        public async void Delete(Hamster hamster)
         {
 
-            httpService.DeleteHamster(hamster.Id);
-            navigation.NavigateTo("/gallery");
+           await httpService.DeleteHamster(hamster.Id);
+           await JSRuntime.InvokeVoidAsync("history.back");
 
         }
         public void Edit()
         {
-            navigation.NavigateTo("/Edit");
+            if (_showEdit)
+            {
+                
+                _showEdit = false;
+                _showOrHideEdit = "Show";
+            }
+            else
+            {
+                if (_showMatches)
+                {
+                    _showMatches = false;
+                    _ShowHide = "Show";
+                }
+                _showEdit = true;
+                _showOrHideEdit = "Hide";
+            }
         }
-        public void GoBack()
-        {
-
-        }
-     
+       
         public void ShowMatches()
         {
             if (_showMatches)
             {
+                
                 _showMatches = false;
                 _ShowHide = "Show";
             }
             else
             {
+                if (_showEdit)
+                {
+                    _showEdit = false;
+                    _showOrHideEdit = "Show";
+                }
                 _showMatches = true;
                 _ShowHide = "Hide";
             }
+        }
+        private async void GoBack()
+        {
+            await JSRuntime.InvokeVoidAsync("history.back");
         }
         private void OnDeleteDialogClose(bool accepted)
         {

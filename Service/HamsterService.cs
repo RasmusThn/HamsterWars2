@@ -71,7 +71,7 @@ internal sealed class HamsterService : IHamsterService
         Random rnd = new Random();
         int n = rnd.Next(1, hamsters.Count());
 
-        var rndHamster = hamsters.Where(h => h.Id.Equals(n)).FirstOrDefault();
+        var rndHamster = hamsters.ElementAt(n);
 
         var hamsterDto = _mapper.Map<HamsterDto>(rndHamster);
 

@@ -1,0 +1,42 @@
+﻿@using Entities.Models
+@using HamsterWars2Blazor.Service
+
+    
+<div class="text-center">
+    <div class="card card-goodies " style="background-color:darkcyan">
+        <div class="card-header">Matches</div>
+@if (matches is not null)
+{
+        @foreach (var match in matches)
+        {
+            <div class="card-body">
+                <strong>Match Id:</strong> @match.Id
+                <strong>Winner:</strong> @hamsters.Where(x=>x.Id == match.WinnerId).First().Name
+                <strong>Looser:</strong> @hamsters.Where(x=>x.Id == match.LoserId).First().Name
+                <strong>Time:</strong> @match.TimeStamp
+            </div>
+        }
+}
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public Hamster Hamster { get; set; }
+    private List<Hamster> hamsters { get; set; }
+    private List<Match> matches;
+
+    [Inject]
+    public IMatchHttpService matchService { get; set; }
+    [Inject]
+    public IHamsterHttpService hamsterService { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        matches = await matchService.GetAllWinMatchesByHamsterId(Hamster.Id);
+        hamsters = await hamsterService.GetAllHamsters();
+        StateHasChanged();
+    }
+
+}

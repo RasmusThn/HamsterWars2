@@ -1,41 +1,23 @@
 ﻿@page "/profile/{Id:int}"
-
-<PageTitle>Profile: @hamster.Name</PageTitle>
-
-@inject NavigationManager navigation;
-<div class="justify-content-center text-center">
-
-   
-        @*<h3><strong>@hamster.Name 's Profile</strong></h3>*@
-        <div class="row-cols-sm-2 col">
-            <HamsterComponent Hamster="@hamster" IsProfile="Isprofile"></HamsterComponent>
-        </div>
-
-        <div class="row-cols-sm-4">
-
-            <button @onclick="GoBack" class="btn btn-secondary">Back</button>
-            @*<button @onclick="Edit" class="btn btn-check">Edit</button>*@
-            <button @onclick="OpenDeleteDialog" class="btn btn-danger">Delete</button>
-
-            <button @onclick="ShowMatches" class="btn btn-primary">@_ShowHide Matches</button>
-        </div>
-        <div class="row-cols-sm-auto">
-
-            @if (_showMatches)
-            {
-
-                <MatchComponent Hamster="@hamster"></MatchComponent>
-            }
-        </div>
-    
-</div>
-
-@*---Modal----*@
-@if (DeleteDialogOpen)
+@using Entities.Models
+@using HamsterWars2Blazor.Service
+<h3>Profile</h3>
+@if (@hamster is not null)
 {
-    <ModalComponent hamster="_hamster"
-                OnClose="@OnDeleteDialogClose">
-    </ModalComponent>
+    
+<ProfileComponent hamster="hamster"> </ProfileComponent>
 }
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    public Hamster hamster { get; set; }
+     [Inject]
+    public IHamsterHttpService httpService { get; set; }
 
+        protected override async Task OnInitializedAsync()
+        {
 
+            hamster = await httpService.GetHamsterById(Id);
+
+        }
+}

@@ -1,0 +1,42 @@
+﻿@using Entities.Models
+
+<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);"
+     aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@hamster.Name</h4>
+                <button type="button" @onclick="ModalCancel" class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to DELETE @hamster.Name ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" @onclick="@ModalOk">Delete</button>
+                <button type="button" class="btn btn-secondary" @onclick="@ModalCancel">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public Hamster hamster { get; set; }
+    
+
+    [Parameter]
+    public EventCallback<bool> OnClose { get; set; }
+
+    private Task ModalCancel()
+    {
+        return OnClose.InvokeAsync(false);
+    }
+
+    private Task ModalOk()
+    {
+        return OnClose.InvokeAsync(true);
+    }
+    	
+    
+}
