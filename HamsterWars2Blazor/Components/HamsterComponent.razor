@@ -2,7 +2,7 @@
 @using HamsterWars2Blazor.Pages
 
 
-<a class="col btn col-sm-4" href="/profile/@hamster.Id/@url">
+<a class="col btn col-sm-4" href="/profile/@hamster.Id">
 <div class=" card d-flex card-goodies card-hover btn col col-sm-4" 
 style="background-color:yellowgreen">
     <img class="card-img-top mt-2 hamster-bild-small " 
@@ -37,5 +37,5 @@ style="background-color:yellowgreen">
     public Hamster hamster { get; set; }
     [Parameter]
     public bool IsProfile { get; set; } = false;
-    private string url = "battle";
+
 }

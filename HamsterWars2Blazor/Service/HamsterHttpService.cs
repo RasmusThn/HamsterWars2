@@ -18,7 +18,6 @@ namespace HamsterWars2Blazor.Service
            var respsonse = await _client.PostAsJsonAsync<Hamster>("api/hamsters",hamster);
             ServiceCheckManager.ResponseCheck(respsonse);            
         }
-
         public async Task DeleteHamster(int id)
         {
            var response =  await _client.DeleteAsync($"api/hamsters/{id}");

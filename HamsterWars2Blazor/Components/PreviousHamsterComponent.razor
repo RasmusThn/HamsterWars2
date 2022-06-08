@@ -1,0 +1,41 @@
+﻿
+@using Entities.Models
+
+
+<div class="row justify-content-center text-center">
+    <HamsterComponent hamster="@Hamster1"></HamsterComponent>
+    <HamsterComponent hamster="@Hamster2"></HamsterComponent>
+</div>
+
+<div class="row justify-content-center text-center">
+    <div class="card col col-sm-4 d-flex card-goodies" style="background-color:orange">
+        
+            <div class="card-header">
+                <h4 style="background-color:green;"class="rounded">Match Won by: <strong>@Hamster1.Name !</strong></h4>
+            </div>
+            <div class="card-body">
+                <p style="background-color:green;" class="rounded"> @Hamster1.Name has a winning procent of @Hamster1Procent.ToString("n2") % 
+                   </p>
+                    <br />
+                    <p style="background-color:palevioletred;" class="rounded">
+                    @Hamster2.Name has a winning procent of @Hamster2Procent.ToString("n2") % 
+                </p>
+            </div>
+        
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Hamster Hamster1 { get; set; }
+    [Parameter]
+    public Hamster Hamster2 { get; set; }
+    [Parameter]
+    public Match match { get; set; }//TODO: ta bort?
+    [Parameter]
+    public double Hamster1Procent { get; set; }
+    [Parameter]
+    public double Hamster2Procent { get; set; }
+
+   
+}

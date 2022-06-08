@@ -20,14 +20,18 @@
   {
       <HamsterComponent Hamster="@hamster"></HamsterComponent>
   }
-</div>
+    </div>
+}
+else
+{
+    <p>Loading...</p>
 }
 
 @code {
     private bool render = false;
     public List<Hamster> WinHamsters{ get; set; }
     public List<Hamster> LossHamsters{ get; set; }
-    
+
     [Inject]
     public IHamsterHttpService httpService{ get; set; }
 
@@ -36,5 +40,6 @@
         WinHamsters = await httpService.GetTop5Winners();
         LossHamsters = await httpService.GetTop5Losers();
         render = true;
+        StateHasChanged();
     }
 }
