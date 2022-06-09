@@ -10,6 +10,7 @@ namespace HamsterWars2Blazor.Service
         Task CreateHamster(Hamster hamster);
         Task DeleteHamster(int id);
         Task UpdateHamster(Hamster hamster);
+        Task EditHamster(Hamster hamster);
         Task<List<Hamster>> GetTop5Winners();
         Task<List<Hamster>> GetTop5Losers();
         Task<Hamster> GetRandomHamster();

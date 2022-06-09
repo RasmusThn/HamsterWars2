@@ -5,11 +5,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">@hamster.Name</h4>
+                <h4 class="modal-title">Delete
+                </h4>
                 <button type="button" @onclick="ModalCancel" class="close">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to DELETE @hamster.Name ?</p>
+                <p>Are you sure you want to DELETE @if (@hamster is null){@matchMessage}
+                    else{ @hamster.Name } ?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" @onclick="@ModalOk">Delete</button>
@@ -22,12 +24,20 @@
 
 @code {
     [Parameter]
-    public Hamster hamster { get; set; }
-    
-
+    public Hamster? hamster { get; set; }
+    [Parameter]
+    public Match? match { get; set; }
+    private string matchMessage;
     [Parameter]
     public EventCallback<bool> OnClose { get; set; }
 
+    protected override void OnInitialized()
+    {
+        if (match is not null)
+        {
+            matchMessage = $"match with id {match.Id}";
+        }
+    }
     private Task ModalCancel()
     {
         return OnClose.InvokeAsync(false);
