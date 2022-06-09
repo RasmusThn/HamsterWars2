@@ -32,11 +32,11 @@
     [Inject]
     public IHamsterHttpService hamsterService { get; set; }
 
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync() //TODO: Kolla om det går utan state has changed nu när det är async istället
     {
         matches = await matchService.GetAllWinMatchesByHamsterId(Hamster.Id);
         hamsters = await hamsterService.GetAllHamsters();
-        StateHasChanged();
+        //StateHasChanged();
     }
 
 }

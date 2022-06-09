@@ -1,0 +1,35 @@
+﻿@page "/match/{Id:int}"
+
+@using Entities.Models
+@using HamsterWars2Blazor.Service
+
+<div>
+<h3>Winner</h3>
+<HamsterComponent hamster="@winHamster"></HamsterComponent>
+</div>
+
+<div>
+<h3>Loser</h3>
+<HamsterComponent hamster="@lossHamster"></HamsterComponent>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    [Parameter]
+    public Match match { get; set; }
+    private Hamster winHamster;
+    private Hamster lossHamster;
+    [Inject]
+    public IMatchHttpService matchHttpService { get; set; }
+    [Inject]
+    public IHamsterHttpService hamsterHttpService { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        match = await matchHttpService.GetMatchById(Id);
+        winHamster = await hamsterHttpService.GetHamsterById(match.WinnerId);
+        lossHamster = await hamsterHttpService.GetHamsterById(match.LoserId);
+        
+    }
+}
