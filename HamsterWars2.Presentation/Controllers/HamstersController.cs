@@ -34,10 +34,6 @@ namespace HamsterWars2.Presentation.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]//Skapar ny hamster 
         public async Task<IActionResult> CreateHamster([FromBody] HamsterForCreationDto hamster)
         {
-            //if (hamster is null)
-            //{
-            //    return BadRequest("Hamster Object is null.");
-            //}
             var createdHamster = await _service.HamsterService.CreateHamsterAsync(hamster);
 
             return CreatedAtRoute("HamsterById", new { id = createdHamster.Id }, createdHamster);
@@ -50,6 +46,14 @@ namespace HamsterWars2.Presentation.Controllers
            await _service.HamsterService.UpdateHamsterGamesAsync(id, hamsterForUpdateDto, trackChanges: true);
             return NoContent();
         }
+        [HttpPut("edit/{id:int}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> EditHamster(int id, [FromBody] HamsterForEditDto hamsterEditDto)
+        {
+           await _service.HamsterService.EditHamsterAsync(id, hamsterEditDto, trackChanges: true);
+            return NoContent();
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteHamster(int id)
         {

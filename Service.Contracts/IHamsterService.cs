@@ -12,4 +12,5 @@ public interface IHamsterService
     Task UpdateHamsterGamesAsync(int hamsterId, HamsterForUpdateDto hamsterForUpdateDto, bool trackChanges);
     Task<IEnumerable<HamsterDto>> GetWinnersAsync(bool trackChanges);
     Task<IEnumerable<HamsterDto>> GetLosersAsync(bool trackChanges);
+    Task EditHamsterAsync(int hamsterId, HamsterForEditDto hamsterEditDto, bool trackChanges);
 }

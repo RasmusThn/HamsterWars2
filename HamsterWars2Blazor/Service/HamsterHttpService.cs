@@ -25,6 +25,13 @@ namespace HamsterWars2Blazor.Service
             ServiceCheckManager.ResponseCheck(response);
           
         }
+
+        public async Task EditHamster(Hamster hamster)
+        {
+            var respsonse = await _client.PutAsJsonAsync<Hamster>($"api/hamsters/edit/{hamster.Id}", hamster);
+            ServiceCheckManager.ResponseCheck(respsonse);
+        }
+
         public async Task<List<Hamster>> GetAllHamsters()
         {
             var hamsters = await _client.GetFromJsonAsync<IEnumerable<Hamster>>("api/hamsters");

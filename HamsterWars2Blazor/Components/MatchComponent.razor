@@ -10,7 +10,9 @@
         @foreach (var match in matches)
         {
             <div class="card-body">
+                <a href="/match/@match.Id">
                 <strong>Match Id:</strong> @match.Id
+                </a>
                 <strong>Winner:</strong> @hamsters.Where(x=>x.Id == match.WinnerId).First().Name
                 <strong>Looser:</strong> @hamsters.Where(x=>x.Id == match.LoserId).First().Name
                 <strong>Time:</strong> @match.TimeStamp
@@ -34,7 +36,7 @@
     [Inject]
     public IHamsterHttpService hamsterService { get; set; }
 
-    protected override async void OnInitialized()
+    protected override async void OnInitialized() //TODO: Kolla om det går utan state has changed nu när det är async istället
     {
         matches = await matchService.GetAllMatchesByHamsterId(Hamster.Id);
         hamsters = await hamsterService.GetAllHamsters();

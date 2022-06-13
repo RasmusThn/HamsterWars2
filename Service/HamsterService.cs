@@ -33,9 +33,19 @@ internal sealed class HamsterService : IHamsterService
     public async Task DeleteHamsterByIdAsync(int hamsterId, bool trackChanges)
     {
         Hamster? hamster = await GetHamsterAndCheckIfExists(hamsterId, trackChanges);
-        _repository.Hamster.DeleteHamster(hamster);
+        // _repository.Hamster.DeleteHamster(hamster);
+        hamster.isActive = false; //Gör den inactive istället för att ta bort.
         await _repository.SaveAsync();
     }
+
+    public async Task EditHamsterAsync(int hamsterId, HamsterForEditDto hamsterEditDto, bool trackChanges)
+    {
+        Hamster? hamster = await GetHamsterAndCheckIfExists(hamsterId, trackChanges);
+
+        _mapper.Map(hamsterEditDto, hamster);
+        await _repository.SaveAsync();
+    }
+
     public async Task<IEnumerable<HamsterDto>> GetAllHamstersAsync(bool trackChanges)
     {
         var hamsters = await _repository.Hamster.GetAllHamstersAsync(trackChanges);

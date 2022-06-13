@@ -1,0 +1,96 @@
+﻿@page "/match/{Id:int}"
+
+@inject IJSRuntime JSRuntime
+
+@using Entities.Models
+@using HamsterWars2Blazor.Service
+
+@if (match is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+
+    <div>
+        <h3>Winner</h3>
+        <HamsterComponent hamster="@winHamster"></HamsterComponent>
+    </div>
+    <div>
+        <p>
+           This Battle was done @days ago
+        </p>
+    </div>
+    <div>
+        <h3>Loser</h3>
+        <HamsterComponent hamster="@lossHamster"></HamsterComponent>
+    </div>
+     <button @onclick="OpenDeleteDialog" class="btn btn-danger">Delete</button>
+}
+@*---Modal----*@
+@if (DeleteDialogOpen)
+{
+    <ModalComponent match="@match"
+                OnClose="@OnDeleteDialogClose">
+    </ModalComponent>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    [Parameter]
+    public Match match { get; set; }
+    private Hamster winHamster;
+    private Hamster lossHamster;
+    private TimeSpan days;
+    public bool DeleteDialogOpen { get; set; }
+    [Inject]
+    public IMatchHttpService matchHttpService { get; set; }
+    [Inject]
+    public IHamsterHttpService hamsterHttpService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        match = await matchHttpService.GetMatchById(Id);
+        winHamster = await hamsterHttpService.GetHamsterById(match.WinnerId);
+        lossHamster = await hamsterHttpService.GetHamsterById(match.LoserId);
+        ClaculateDays();
+        StateHasChanged();
+    }
+    void ClaculateDays()
+    {
+        days = DateTime.Now - match.TimeStamp; //TODO: Fixa till timmar eller Dagar..
+    }
+    private void OnDeleteDialogClose(bool accepted)
+    {
+        DeleteDialogOpen = false;
+        if (accepted)
+        {
+            Delete(match);
+        }
+        StateHasChanged();
+    }
+    private void OpenDeleteDialog()
+    {
+        DeleteDialogOpen = true;
+        StateHasChanged();
+    }
+    public async void Delete(Match match)
+    {
+        UpdateHamsters();
+        await matchHttpService.DeleteMatch(match.Id);
+        await JSRuntime.InvokeVoidAsync("history.back");
+        //TODO: lägg till så att vinster/förluster och games ändras tillbaka när man tar bort match.
+
+    }
+    async void UpdateHamsters()
+    {
+        winHamster.Wins--;
+        winHamster.Games--;
+        await hamsterHttpService.UpdateHamster(winHamster);
+
+        lossHamster.Losses--;
+        lossHamster.Games--;
+        await hamsterHttpService.UpdateHamster(lossHamster);
+    }
+}

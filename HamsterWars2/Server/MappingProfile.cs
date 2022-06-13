@@ -13,6 +13,7 @@ namespace HamsterWars2
             CreateMap<HamsterForCreationDto, Hamster>();
             CreateMap<MatchForCreationDto, Match>();
             CreateMap<HamsterForUpdateDto, Hamster>();
+            CreateMap<HamsterForEditDto, Hamster>();
         }
     }
 }
