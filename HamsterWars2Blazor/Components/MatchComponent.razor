@@ -2,7 +2,7 @@
 @using HamsterWars2Blazor.Service
 
     
-<div class="text-center">
+@*<div class="text-center">
     <div class="card card-goodies " style="background-color:darkcyan">
         <div class="card-header">Matches</div>
 @if (matches is not null)
@@ -18,7 +18,9 @@
         }
 }
     </div>
-</div>
+</div>*@
+
+<ShowMatchesComponent Matches="matches"></ShowMatchesComponent>
 
 
 @code {
@@ -34,9 +36,9 @@
 
     protected override async void OnInitialized()
     {
-        matches = await matchService.GetAllWinMatchesByHamsterId(Hamster.Id);
+        matches = await matchService.GetAllMatchesByHamsterId(Hamster.Id);
         hamsters = await hamsterService.GetAllHamsters();
         StateHasChanged();
     }
-
+   
 }

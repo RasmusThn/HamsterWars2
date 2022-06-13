@@ -49,12 +49,20 @@ namespace HamsterWars2.Presentation.Controllers
         }
         [HttpGet]
         [Route("/matchwinners/{id:int}")]
-        public async Task<IActionResult> GetAllMatchesForHamsterById(int id)
+        public async Task<IActionResult> GetAllWinMatchesForHamsterById(int id)
         {
-            var hamsterMatches = await _service.MatchService.GetAllMatchesByHamsterIdAsync(id, trackChanges:false);
+            var hamsterMatches = await _service.MatchService.GetAllWinMatchesByHamsterIdAsync(id, trackChanges:false);
 
             return Ok(hamsterMatches);
         }
-        //TODO: En likadan fast för förlorade matcher.
+       
+        [HttpGet]
+        [Route("/matches/hamster/{id:int}")]
+        public async Task<IActionResult> GetAllMatchesForHamsterById(int id)
+        {
+            var hamsterMatches = await _service.MatchService.GetAllMatchesByHamsterIdAsync(id, trackChanges: false);
+
+            return Ok(hamsterMatches);
+        }
     }
 }

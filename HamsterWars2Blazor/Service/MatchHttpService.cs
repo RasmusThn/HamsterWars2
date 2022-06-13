@@ -34,6 +34,14 @@ namespace HamsterWars2Blazor.Service
             return matches.ToList();
         }
 
+        public async Task<List<Match>> GetAllMatchesByHamsterId(int id)
+        {
+            var matches = await _client.GetFromJsonAsync<List<Match>>($"/matches/hamster/{id}");
+            ServiceCheckManager.NullCheck(matches);
+
+            return matches.ToList();
+        }
+
         public async Task<List<Match>> GetAllWinMatchesByHamsterId(int id)
         {
             //TODO:Här slåt den av

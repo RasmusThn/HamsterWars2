@@ -1,4 +1,6 @@
 ﻿@page "/matches"
+@using Entities.Models
+@using HamsterWars2Blazor.Service
 
 
 <h1>Match History</h1>
@@ -6,8 +8,15 @@
 
 
 
-<ShowMatchesComponent></ShowMatchesComponent>
+<ShowMatchesComponent Matches="allMatches"></ShowMatchesComponent>
 
 @code {
-    
+     [Inject]
+    public IMatchHttpService MatchHttpService{ get; set; }
+    public List<Match> allMatches { get; set; } = new List<Match>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        allMatches = await MatchHttpService.GetAllMatches();
+    }
 }

@@ -2,48 +2,63 @@
 @using Entities.Models
 @using HamsterWars2Blazor.Service
 
-<h3>Component</h3>
-
-<div>
-    <table>
+@if (Matches is null || hamsters is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    
+<div class="container">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Winner</th>
                 <th>Loser</th>
                 <th>Date</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var match in Matches)
            {
+               
                <tr>
                    <td>
                        @match.Id
                    </td>
                    <td>
-                       @match.WinnerId
+                       @hamsters.Where(x=>x.Id == @match.WinnerId).First().Name
                    </td>
                    <td>
-                       @match.LoserId
+                       @hamsters.Where(x=>x.Id == @match.LoserId).First().Name
                    </td>
                    <td>
                        @match.TimeStamp
                    </td>
+                   <td>
+                       <a href="/matches/@match.Id" class="btn btn-primary">Edit</a>
+                   </td>
                </tr>
+                 
            }
         </tbody>
     </table>
      </div>
+}
 @code {
-    public List<Match> Matches { get; set; } = new List<Match>();
-
-
+    [Parameter]
+    public List<Match> Matches { get; set; }
+    private List<Hamster> hamsters { get; set; }
     [Inject]
-    public IMatchHttpService MatchHttpService{ get; set; }
+    public IHamsterHttpService hamsterService { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async void OnInitialized()
     {
-        Matches = await MatchHttpService.GetAllMatches();
+        
+        hamsters = await hamsterService.GetAllHamsters();
+        StateHasChanged();
     }
+   
 }

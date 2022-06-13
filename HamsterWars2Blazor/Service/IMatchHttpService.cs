@@ -10,5 +10,6 @@ namespace HamsterWars2Blazor.Service
         Task<Match> GetMatchById(int id);
         Task CreateMatch(MatchForCreationDto match);
         Task DeleteMatch(int id);
+        Task<List<Match>> GetAllMatchesByHamsterId(int id);
     }
 }
