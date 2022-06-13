@@ -70,9 +70,9 @@ public partial class Battle : ComponentBase
         hamster1 = await hamsterHttpService.GetRandomHamster();
         do
         {
-             hamster2 = await hamsterHttpService.GetRandomHamster();
+             hamster2 = await hamsterHttpService.GetRandomHamster();//TODO: koll is active
 
-        } while (hamster1 == hamster2);
+        } while (hamster1.Id == hamster2.Id);//TODO får fram 2 ändå ibland
 
     }
     private static double CalculateProcent(Hamster hamster)

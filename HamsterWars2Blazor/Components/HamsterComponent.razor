@@ -2,34 +2,55 @@
 @using HamsterWars2Blazor.Pages
 
 
-<a class="col btn col-sm-4" href="/profile/@hamster.Id">
-<div class=" card d-flex card-goodies card-hover btn col col-sm-4" 
-style="background-color:yellowgreen">
-    <img class="card-img-top mt-2 hamster-bild-small " 
-    src="@hamster.ImgName" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">@hamster.Name</h5>
-        <p class="card-text">
-            Wins: @hamster.Wins
-            <br />
-            Defeats: @hamster.Losses
-            <br />
-            Games: @hamster.Games
-            @if (IsProfile)
-            {
-                <span>
-                    <br />
-                    Age: @hamster.Age
-                    <br />
-                    Favourite Food: @hamster.FavFood
-                    <br />
-                    Loves: @hamster.Loves
-                </span>
-            }
-        </p>
+@if (@hamster.isActive == false)
+{
+    <div class="card-deleted col text-center col-sm-4">
+
+    <div class="  card d-flex card-goodies col col-sm-4">
+        <img class="card-img-top mt-2 hamster-bild-small "
+             src="">
+        <div class="card-body ">
+                <h5 class="card-title">@hamster.Name</h5>
+                <p class="card-text">
+                    This Hamster has been Deleted.
+                    
+                </p>
+            </div>
     </div>
-</div>
-</a>
+    </div>
+}
+else
+{
+
+    <a class="col btn col-sm-4" href="/profile/@hamster.Id">
+        <div class=" card d-flex card-goodies card-hover btn col col-sm-4"
+         style="background-color:yellowgreen">
+            <img class="card-img-top mt-2 hamster-bild-small "
+             src="@hamster.ImgName" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@hamster.Name</h5>
+                <p class="card-text">
+                    Wins: @hamster.Wins
+                    <br />
+                    Defeats: @hamster.Losses
+                    <br />
+                    Games: @hamster.Games
+                    @if (IsProfile)
+                    {
+                        <span>
+                            <br />
+                            Age: @hamster.Age
+                            <br />
+                            Favourite Food: @hamster.FavFood
+                            <br />
+                            Loves: @hamster.Loves
+                        </span>
+                    }
+                </p>
+            </div>
+        </div>
+    </a>
+}
 
 
 @code {

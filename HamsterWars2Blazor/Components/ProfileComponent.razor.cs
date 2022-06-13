@@ -22,15 +22,12 @@ namespace HamsterWars2Blazor.Components
         [Inject]
         public IHamsterHttpService httpService { get; set; }
 
-        [Inject]
-        NavigationManager navigation { get; set; }
         
         public async void Delete(Hamster hamster)
         {
 
            await httpService.DeleteHamster(hamster.Id);
            await JSRuntime.InvokeVoidAsync("history.back");
-
         }
         public void Edit()
         {
@@ -51,7 +48,6 @@ namespace HamsterWars2Blazor.Components
                 _showOrHideEdit = "Hide";
             }
         }
-       
         public void ShowMatches()
         {
             if (_showMatches)

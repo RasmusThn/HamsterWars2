@@ -80,6 +80,9 @@ a, .btn-link {
 .card-hover:hover {
     opacity: 0.7;
 }
+.card-deleted{
+    background-color:gray;
+}
 .table-hover{
     opacity: 0.7;
 }

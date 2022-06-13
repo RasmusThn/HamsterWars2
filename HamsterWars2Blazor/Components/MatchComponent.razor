@@ -2,27 +2,16 @@
 @using HamsterWars2Blazor.Service
 
     
-@*<div class="text-center">
-    <div class="card card-goodies " style="background-color:darkcyan">
-        <div class="card-header">Matches</div>
-@if (matches is not null)
+@if (matches.Count <= 0)
 {
-        @foreach (var match in matches)
-        {
-            <div class="card-body">
-                <a href="/match/@match.Id">
-                <strong>Match Id:</strong> @match.Id
-                </a>
-                <strong>Winner:</strong> @hamsters.Where(x=>x.Id == match.WinnerId).First().Name
-                <strong>Looser:</strong> @hamsters.Where(x=>x.Id == match.LoserId).First().Name
-                <strong>Time:</strong> @match.TimeStamp
-            </div>
-        }
+    <br />
+    <p>This hamster has not yet been to a single <a href="/battle"><strong>BATTLE</strong></a></p>
 }
-    </div>
-</div>*@
-
+else
+{
+    
 <ShowMatchesComponent Matches="matches"></ShowMatchesComponent>
+}
 
 
 @code {

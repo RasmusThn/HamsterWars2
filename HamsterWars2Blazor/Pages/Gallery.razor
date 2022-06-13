@@ -4,10 +4,16 @@
 @using HamsterWars2Blazor.Service
 
 <h3>All Hamsters</h3>
-
-    @foreach (var hamster in Hamsters)
+@if (Hamsters is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    
+@foreach (var hamster in Hamsters)
     {
-   @if (hamster.isActive)
+   @if (@hamster.isActive)
         {
             <a class="col col-sm-2 btn" href="/profile/@hamster.Id">
                 <div class="card card-goodies card-hover" style="background-color:cadetblue">
@@ -21,10 +27,11 @@
             </a>
         }
     }
+}
    
 @code {
 
-     public List<Hamster> Hamsters { get; set; } = new List<Hamster>();
+     public List<Hamster> Hamsters { get; set; }
      private readonly string url = "gallery";
 
     [Inject]

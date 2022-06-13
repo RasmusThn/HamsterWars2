@@ -9,8 +9,8 @@
 else
 {
     
-<div class="container">
-    <table class="table table-bordered">
+<div class="container card card-goodies" style="background-color:darkcyan">
+    <table class="table table-responsive-sm">
         <thead>
             <tr>
                 <th>Id</th>
@@ -28,7 +28,7 @@ else
                    <td>
                        @match.Id
                    </td>
-                   <td>
+                   <td >
                        @hamsters.Where(x=>x.Id == @match.WinnerId).First().Name
                    </td>
                    <td>
@@ -38,7 +38,7 @@ else
                        @match.TimeStamp
                    </td>
                    <td>
-                       <a href="/matches/@match.Id" class="btn btn-primary">Edit</a>
+                       <a href="/match/@match.Id" class="btn btn-primary">Edit</a>
                    </td>
                </tr>
                  

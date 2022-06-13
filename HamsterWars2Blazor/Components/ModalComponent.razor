@@ -10,8 +10,9 @@
                 <button type="button" @onclick="ModalCancel" class="close">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to DELETE @if (@hamster is null){@matchMessage}
-                    else{ @hamster.Name } ?</p>
+                <p>Are you sure you want to DELETE @if (@hamster is not null){@hamster.Name <p>?</p>}
+                    else{@matchMessage
+                    <p><br/> Deleting this match will remove wins/losses from the involved hamsters</p> }</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" @onclick="@ModalOk">Delete</button>
@@ -35,7 +36,7 @@
     {
         if (match is not null)
         {
-            matchMessage = $"match with id {match.Id}";
+            matchMessage = $"match with id {match.Id} ?";
         }
     }
     private Task ModalCancel()

@@ -13,4 +13,5 @@ public record HamsterDto
     public int Wins { get; set; }
     public int Losses { get; set; }
     public int Games { get; set; }
+    public bool isActive { get; set; }
 }
