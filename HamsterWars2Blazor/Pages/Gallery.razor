@@ -3,20 +3,24 @@
 @using Entities.Models
 @using HamsterWars2Blazor.Service
 
-<h3>All Hamsters</h3>
+<div class="text-center">
+
+<h1>All Hamsters</h1>
+</div>
 @if (Hamsters is null)
 {
     <p>Loading...</p>
 }
 else
 {
+    //TODO:Sökfunktion
     
 @foreach (var hamster in Hamsters)
     {
    @if (@hamster.isActive)
         {
             <a class="col col-sm-2 btn" href="/profile/@hamster.Id">
-                <div class="card card-goodies card-hover" style="background-color:cadetblue">
+                <div class="card card-goodies card-hover" style="background-color:teal">
                     <div class="card-title">
                         @hamster.Name
                     </div>

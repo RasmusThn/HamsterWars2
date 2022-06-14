@@ -76,11 +76,11 @@ internal sealed class HamsterService : IHamsterService
     public async Task<HamsterDto> GetRandomHamsterAsync(bool trackChanges)
     {
         var hamsters = await _repository.Hamster.GetAllHamstersAsync(trackChanges); 
-        var activeHamsters = hamsters.Where(x => x.isActive);
+        var activeHamsters = hamsters.Where(x => x.isActive == true);
         Random rnd = new Random();
-        int n = rnd.Next(1, activeHamsters.Count());//TODO: kanske behöver börja på 0?
+        int n = rnd.Next(0, activeHamsters.Count());//TODO: kanske behöver börja på 0?
 
-        var rndHamster = hamsters.ElementAt(n);
+        var rndHamster = activeHamsters.ElementAt(n);
 
         var hamsterDto = _mapper.Map<HamsterDto>(rndHamster);
 

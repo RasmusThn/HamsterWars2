@@ -2,6 +2,9 @@
 @using Entities.Models
 @using HamsterWars2Blazor.Service
 
+
+ 
+
 @if (Matches is null || hamsters is null)
 {
     <p>Loading...</p>
@@ -9,11 +12,11 @@
 else
 {
     
-<div class="container card card-goodies" style="background-color:darkcyan">
-    <table class="table table-responsive-sm">
-        <thead>
+<div class="display-flex card card-goodies justify-content-center" style="background-color:darkcyan">
+    <table id="myTable" class="table ">
+        <thead >
             <tr>
-                <th>Id</th>
+                <th>#</th>
                 <th>Winner</th>
                 <th>Loser</th>
                 <th>Date</th>
@@ -53,6 +56,7 @@ else
     private List<Hamster> hamsters { get; set; }
     [Inject]
     public IHamsterHttpService hamsterService { get; set; }
+  
 
     protected override async void OnInitialized()
     {

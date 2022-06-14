@@ -10,22 +10,30 @@
     <p>Loading...</p>
 }
 else
-{
+{<div class="row text-center d-flex justify-content-center">
 
-    <div>
+
+    <div class="row col-sm-3">
         <h3>Winner</h3>
         <HamsterComponent hamster="@winHamster"></HamsterComponent>
     </div>
-    <div>
+    <div class="row mt-2">
         <p>
+            <hr>
            This Battle was done @days ago
+            <hr>
         </p>
     </div>
-    <div>
+    <div class="row col-sm-3">
         <h3>Loser</h3>
         <HamsterComponent hamster="@lossHamster"></HamsterComponent>
     </div>
+    
+    <div class=" row-cols-sm-6 mt-4 ">
+
      <button @onclick="OpenDeleteDialog" class="btn btn-danger">Delete</button>
+    </div>
+</div>
 }
 @*---Modal----*@
 @if (DeleteDialogOpen)

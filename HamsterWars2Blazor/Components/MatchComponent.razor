@@ -2,15 +2,20 @@
 @using HamsterWars2Blazor.Service
 
     
-@if (matches.Count <= 0)
+@if (matches == null)
 {
-    <br />
-    <p>This hamster has not yet been to a single <a href="/battle"><strong>BATTLE</strong></a></p>
+    <p>Loading...</p>
+    
+}
+else if(matches.Count > 0)
+{
+    
+    <ShowMatchesComponent Matches="matches"></ShowMatchesComponent>
 }
 else
 {
-    
-<ShowMatchesComponent Matches="matches"></ShowMatchesComponent>
+    <br />
+    <p>This hamster has not yet been to a single <a href="/battle"><strong>BATTLE</strong></a></p>
 }
 
 

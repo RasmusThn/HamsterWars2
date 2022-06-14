@@ -4,28 +4,28 @@
 
 @if (@hamster.isActive == false)
 {
-    <div class="card-deleted col text-center col-sm-4">
+    <div class="">
 
-    <div class="  card d-flex card-goodies col col-sm-4">
-        <img class="card-img-top mt-2 hamster-bild-small "
+        <div class="card card-goodies ">
+            <img class="card-img-top mt-2 hamster-bild-small "
              src="">
-        <div class="card-body ">
+            <div class="card-body ">
                 <h5 class="card-title">@hamster.Name</h5>
                 <p class="card-text">
                     This Hamster has been Deleted.
-                    
+
                 </p>
             </div>
-    </div>
+        </div>
     </div>
 }
 else
 {
 
-    <a class="col btn col-sm-4" href="/profile/@hamster.Id">
-        <div class=" card d-flex card-goodies card-hover btn col col-sm-4"
-         style="background-color:yellowgreen">
-            <img class="card-img-top mt-2 hamster-bild-small "
+    <a class="btn col-sm-4 " href="/profile/@hamster.Id">
+        <div class=" card card-goodies card-hover "
+         style="background-color:@color">
+            <img class="card-img-top mt-2 @pictureSize"
              src="@hamster.ImgName" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">@hamster.Name</h5>
@@ -58,5 +58,32 @@ else
     public Hamster hamster { get; set; }
     [Parameter]
     public bool IsProfile { get; set; } = false;
+    [Parameter]
+    public string IsWinner { get; set; }
+    public string color;
+    public string pictureSize;
 
+    protected override void OnInitialized()
+    {
+        if (IsWinner == "win")
+        {
+            color = "yellowgreen";
+        }
+        else if (IsWinner == "loss")
+        {
+            color = " #F04520";
+        }
+        else
+        {
+            color = "teal";
+        }
+        if (IsProfile)
+        {
+            pictureSize = "hamster-bild";
+        }
+        else
+        {
+            pictureSize = "hamster-bild-small";
+        }
+    }
 }

@@ -6,7 +6,7 @@
 <EditForm Model="@hamster" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
     <DataAnnotationsValidator />
 
-    <div class="form-group">
+    <div class="form-group container-fluid col-sm-5 display-flex">
 
         <label for="@hamster.Name">Name</label>
         <ValidationMessage For="@(() => hamster.Name)" />
@@ -43,7 +43,7 @@
             </div>
 
             <div>
-                <img src="@CompleteSrc" />
+                <img class="hamster-bild" src="@CompleteSrc" />
             </div>
         }
 
