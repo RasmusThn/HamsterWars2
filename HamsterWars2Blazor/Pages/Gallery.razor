@@ -3,21 +3,36 @@
 @using Entities.Models
 @using HamsterWars2Blazor.Service
 
-<div class="text-center">
+<PageTitle>Gallery</PageTitle>
 
-<h1>All Hamsters</h1>
+@*Sökfunktion*@
+<div class="row text-center justify-content-center">
+
+    <h1>All Hamsters</h1>
+    <div class="container card card-goodies row col-sm-3" style="width: 25rem; background-color:teal">
+        <div class="form-group card-body">
+            <input class="form-control text-center"
+                   @bind-value="searchTerm" id="search"
+                   placeholder="Hamster to search for..." />
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-secondary" @onclick="GethamsterbySearch">
+                Search
+            </button>
+        </div>
+    </div>
 </div>
+
 @if (Hamsters is null)
 {
     <p>Loading...</p>
+    <div class="spinner-border"></div>
 }
 else
 {
-    //TODO:Sökfunktion
-    
-@foreach (var hamster in Hamsters)
+    @foreach (var hamster in Hamsters)
     {
-   @if (@hamster.isActive)
+        @if (@hamster.isActive)
         {
             <a class="col col-sm-2 btn" href="/profile/@hamster.Id">
                 <div class="card card-goodies card-hover" style="background-color:teal">
@@ -32,17 +47,28 @@ else
         }
     }
 }
-   
+
 @code {
 
-     public List<Hamster> Hamsters { get; set; }
-     private readonly string url = "gallery";
-
+    public List<Hamster> Hamsters { get; set; }
+    private string searchTerm { get; set; } = string.Empty;
     [Inject]
-    public IHamsterHttpService HamsterHttpService{ get; set; }
+    public IHamsterHttpService HamsterHttpService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         Hamsters = await HamsterHttpService.GetAllHamsters();
+    }
+    public async Task GethamsterbySearch()
+    {
+        Hamsters = await GetTheSearchResults(searchTerm);
+    }
+    public async Task<List<Hamster>> GetTheSearchResults(string searchTerm)
+    {
+        var AllHamsters = await HamsterHttpService.GetAllHamsters();
+        var searchHamsters = AllHamsters.Where(p => string.IsNullOrEmpty(searchTerm)
+           || p.Name.ToLower().Contains(searchTerm.ToLower()));
+
+        return searchHamsters.ToList();
     }
 }

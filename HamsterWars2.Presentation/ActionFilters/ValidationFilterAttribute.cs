@@ -20,7 +20,7 @@ public class ValidationFilterAttribute : IActionFilter
         var controller = context.RouteData.Values["controller"];
 
         var param = context.ActionArguments
-            .SingleOrDefault(x => x.Value.ToString().Contains("Dto")).Value;//TODO: detta kanske förstör..
+            .SingleOrDefault(x => x.Value.ToString().Contains("Dto")).Value;
 
         if (param is null)
         {

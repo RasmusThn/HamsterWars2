@@ -41,7 +41,7 @@ public partial class Battle : ComponentBase
 
 
 
-        RunAgain(hamsterWin, hamsterLoss);
+       await RunAgain(hamsterWin, hamsterLoss);
 
     }
     public void AddWin(Hamster hamsterWin)
@@ -70,9 +70,9 @@ public partial class Battle : ComponentBase
         hamster1 = await hamsterHttpService.GetRandomHamster();
         do
         {
-             hamster2 = await hamsterHttpService.GetRandomHamster();//TODO: koll is active
+             hamster2 = await hamsterHttpService.GetRandomHamster();
 
-        } while (hamster1.Id == hamster2.Id);//TODO får fram 2 ändå ibland
+        } while (hamster1.Id == hamster2.Id);
 
     }
     private static double CalculateProcent(Hamster hamster)

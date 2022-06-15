@@ -1,11 +1,9 @@
 ﻿@using Entities.Models
 @using HamsterWars2Blazor.Pages
 
-
 @if (@hamster.isActive == false)
 {
     <div class="">
-
         <div class="card card-goodies ">
             <img class="card-img-top mt-2 hamster-bild-small "
              src="">
@@ -13,7 +11,6 @@
                 <h5 class="card-title">@hamster.Name</h5>
                 <p class="card-text">
                     This Hamster has been Deleted.
-
                 </p>
             </div>
         </div>
@@ -21,8 +18,7 @@
 }
 else
 {
-
-    <a class="btn col-sm-4 " href="/profile/@hamster.Id">
+    <a class="btn @setSize " href="/profile/@hamster.Id">
         <div class=" card card-goodies card-hover "
          style="background-color:@color">
             <img class="card-img-top mt-2 @pictureSize"
@@ -62,6 +58,9 @@ else
     public string IsWinner { get; set; }
     public string color;
     public string pictureSize;
+    [Parameter]
+    public bool SetSizeBool { get; set; }
+    private string setSize;
 
     protected override void OnInitialized()
     {
@@ -84,6 +83,14 @@ else
         else
         {
             pictureSize = "hamster-bild-small";
+        }
+        if (SetSizeBool)
+        {
+            setSize = "";
+        }
+        else
+        {
+            setSize = "col-sm-4";
         }
     }
 }

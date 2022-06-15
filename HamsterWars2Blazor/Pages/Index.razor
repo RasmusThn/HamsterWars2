@@ -2,22 +2,91 @@
 @using Entities.Models
 @using HamsterWars2Blazor.Service
 
+<PageTitle>Home</PageTitle>
+<div class="text-center">
+    <h1><strong>HAMSTER WARS 2</strong></h1>
+</div>
+<div class="row justify-content-center">
+@*---------FlipCard----Battle------*@
+<div class="flip-box m-5">
+    <div class="flip-box-inner ">
+        <div class="flip-box-front borderRad">
+            <img src="/images/cards/War.jpg" alt="Battle" style="width:500px;height:400px" class="borderRad">
+        </div>
+
+        <div class="flip-box-back borderRad card">
+
+            <a href="/battle" class="text-decoration-none card-body">
+                <div>
+                    <h2 class="card-header">Battle</h2>
+                    <p class="card-text">Click Here to go to the Battle</p>
+                    <p class="card-footer">To Choose which hamster is the cutest</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+@*---------FlipCard---gallery-------*@
+<div class="flip-box m-5 ">
+    <div class="flip-box-inner ">
+        <div class="flip-box-front borderRad">
+            <img src="/images/cards/gallery.jpg" alt="gallery" style="width:500px;height:400px" class="borderRad">
+        </div>
+
+        <div class="flip-box-back borderRad card">
+
+            <a href="/gallery" class="text-decoration-none card-body">
+                <div>
+                    <h2 class="card-header">Gallery</h2>
+                    <p class="card-text">Click Here to show all our cute Hamsters</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row justify-content-center ">
+@*---------FlipCard----Top5------*@
+<div class="flip-box m-5">
+    <div class="flip-box-inner ">
+        <div class="flip-box-front borderRad">
+            <img src="/images/cards/top5.jpg" alt="top5" style="width:500px;height:400px" class="borderRad">
+        </div>
+
+        <div class="flip-box-back borderRad card">
+
+            <a href="/top5" class="text-decoration-none card-body">
+                <div>
+                    <h2 class="card-header">Top</h2>
+                    <p class="card-text">Click Here to show our Top 5's</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+@*---------FlipCard----Add------*@
+<div class="flip-box m-5">
+    <div class="flip-box-inner ">
+        <div class="flip-box-front borderRad">
+            <img src="/images/cards/add.png" alt="add" style="width:500px;height:400px" class="borderRad">
+        </div>
+
+        <div class="flip-box-back borderRad card">
+
+            <a href="/create" class="text-decoration-none card-body">
+                <div>
+                    <h2 class="card-header">Add Hamster</h2>
+                    <p class="card-text">Click Here to add your own Hamster to the collection</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+
+@code {
 
 
 
-<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-
-
-<GetHamsterComponent></GetHamsterComponent>
-
-@code{
-    
-   
-
-   
 }

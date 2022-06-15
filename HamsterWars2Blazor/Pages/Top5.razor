@@ -1,12 +1,13 @@
 ﻿@page "/top5"
+
 @using Entities.Models
 @using HamsterWars2Blazor.Service
+
 <PageTitle>Top 5</PageTitle>
 
 @if (render)
 {
     <div class="row text-center container-fluid">
-
         <h1><strong>Top 5 Winners</strong></h1>
         <div class="col-sm-7 d-flex">
             @foreach (var hamster in WinHamsters)
@@ -14,10 +15,8 @@
                 <HamsterComponent Hamster="@hamster"></HamsterComponent>
             }
         </div>
-
-            <h1><strong>Top 5 Losers</strong></h1>
-            
-            <hr>
+        <h1><strong>Top 5 Losers</strong></h1>
+        <hr>
         <div class="col-sm-7 d-flex ">
             @foreach (var hamster in LossHamsters)
             {
@@ -29,13 +28,13 @@
 else
 {
     <p>Loading...</p>
+    <div class="spinner-border"></div>
 }
 
 @code {
     private bool render = false;
     public List<Hamster> WinHamsters { get; set; }
     public List<Hamster> LossHamsters { get; set; }
-
     [Inject]
     public IHamsterHttpService httpService { get; set; }
 

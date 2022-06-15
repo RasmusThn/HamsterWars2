@@ -3,21 +3,19 @@
 @using HamsterWars2Blazor.Service
 @if (@hamster is not null)
 {
-    
-<ProfileComponent hamster="hamster"> </ProfileComponent>
+
+    <ProfileComponent hamster="hamster"> </ProfileComponent>
 
 }
 @code {
     [Parameter]
     public int Id { get; set; }
     public Hamster hamster { get; set; }
-     [Inject]
+    [Inject]
     public IHamsterHttpService httpService { get; set; }
 
-        protected override async Task OnInitializedAsync()
-        {
-
-            hamster = await httpService.GetHamsterById(Id);
-
-        }
+    protected override async Task OnInitializedAsync()
+    {
+        hamster = await httpService.GetHamsterById(Id);
+    }
 }

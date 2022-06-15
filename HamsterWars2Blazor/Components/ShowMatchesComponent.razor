@@ -1,17 +1,13 @@
-﻿
-@using Entities.Models
+﻿@using Entities.Models
 @using HamsterWars2Blazor.Service
-
-
- 
 
 @if (Matches is null || hamsters is null)
 {
     <p>Loading...</p>
+    <div class="spinner-border"></div>
 }
 else
 {
-    
 <div class="display-flex card card-goodies justify-content-center" style="background-color:darkcyan">
     <table id="myTable" class="table ">
         <thead >
@@ -26,7 +22,6 @@ else
         <tbody>
             @foreach (var match in Matches)
            {
-               
                <tr>
                    <td>
                        @match.Id
@@ -44,7 +39,6 @@ else
                        <a href="/match/@match.Id" class="btn btn-primary">Edit</a>
                    </td>
                </tr>
-                 
            }
         </tbody>
     </table>
@@ -57,7 +51,6 @@ else
     [Inject]
     public IHamsterHttpService hamsterService { get; set; }
   
-
     protected override async void OnInitialized()
     {
         

@@ -2,52 +2,52 @@
 @if (hamster1 is null && hamster2 is null)
 {
     <p>Loading...</p>
+    <div class="spinner-border"></div>
 }
 else
 {
-<PageTitle>Battle between @hamster1.Name and @hamster2.Name</PageTitle>
+    <PageTitle>Battle between @hamster1.Name and @hamster2.Name</PageTitle>
 
+    <div class="row justify-content-center text-center">
+        <h2 class="card-goodies" style="background-color: teal; width:contain;">
+            <strong>Click On The Cutest Hamster</strong>
+        </h2>
 
-
-<div class="row justify-content-center text-center">
-    <h2 class="card-goodies" style="background-color: teal; width:contain;">
-        <strong>Click On The Cutest Hamster</strong></h2>
-
-    <div class="card btn col col-sm-4 d-flex card-goodies card-hover"
+        <div class="card btn col col-sm-4 d-flex card-goodies card-hover"
          @onclick="@(x => Update(@hamster1,@hamster2))"
-         style="width: 25rem; background-color:#73926C">
-        <img class="card-img-top hamster-bild" src="@hamster1.ImgName" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">@hamster1.Name</h5>
-            <p class="card-text">
-                Loves: @hamster1.Loves
-                <br />
-                Fav Food: @hamster1.FavFood
-            </p>
+         style="width: 25rem; background-color:teal">
+            <img class="card-img-top hamster-bild" src="@hamster1.ImgName" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">@hamster1.Name</h5>
+                <p class="card-text">
+                    Loves: @hamster1.Loves
+                    <br />
+                    Fav Food: @hamster1.FavFood
+                </p>
+            </div>
         </div>
-    </div>
-    <div class="card btn col col-sm-4 d-flex card-goodies card-hover"
+        <div class="card btn col col-sm-4 d-flex card-goodies card-hover"
          @onclick="@(x => Update(@hamster2,@hamster1))"
-         style="width: 25rem; background-color:#73926C ">
-        <img class="card-img-top hamster-bild" src="@hamster2.ImgName" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">@hamster2.Name</h5>
-            <p class="card-text">
-                Loves: @hamster2.Loves
-                <br />
-                Fav Food: @hamster2.FavFood
-            </p>
+         style="width: 25rem; background-color:teal ">
+            <img class="card-img-top hamster-bild" src="@hamster2.ImgName" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">@hamster2.Name</h5>
+                <p class="card-text">
+                    Loves: @hamster2.Loves
+                    <br />
+                    Fav Food: @hamster2.FavFood
+                </p>
+            </div>
+        </div>
 
+        <div>
+            @if (oldHamster1 != null && oldHamster2 != null)
+            {
+                <hr />
+                <PreviousHamsterComponent Hamster1="oldHamster1" Hamster2="oldHamster2"
+                                  Hamster1Procent="hamster1Procent" Hamster2Procent="hamster2Procent">
+                </PreviousHamsterComponent>
+            }
         </div>
     </div>
-
-</div>
-<hr />
-@if (oldHamster1 != null && oldHamster2 != null)
-{
-
-    <PreviousHamsterComponent Hamster1="oldHamster1" Hamster2="oldHamster2"
-                          Hamster1Procent="hamster1Procent" Hamster2Procent="hamster2Procent">
-    </PreviousHamsterComponent>
-}
 }

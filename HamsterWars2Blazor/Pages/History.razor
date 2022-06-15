@@ -3,18 +3,14 @@
 @using HamsterWars2Blazor.Service
 
 <div class="text-center">
-
-<h1>Match History</h1>
+    <h1>Match History</h1>
 </div>
-
-
-
 
 <ShowMatchesComponent Matches="allMatches"></ShowMatchesComponent>
 
 @code {
-     [Inject]
-    public IMatchHttpService MatchHttpService{ get; set; }
+    [Inject]
+    public IMatchHttpService MatchHttpService { get; set; }
     public List<Match> allMatches { get; set; } = new List<Match>();
 
     protected override async Task OnInitializedAsync()

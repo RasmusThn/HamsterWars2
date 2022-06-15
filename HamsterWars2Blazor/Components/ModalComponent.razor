@@ -22,7 +22,6 @@
     </div>
 </div>
 
-
 @code {
     [Parameter]
     public Hamster? hamster { get; set; }
@@ -43,7 +42,6 @@
     {
         return OnClose.InvokeAsync(false);
     }
-
     private Task ModalOk()
     {
         return OnClose.InvokeAsync(true);

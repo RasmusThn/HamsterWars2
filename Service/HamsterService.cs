@@ -78,7 +78,7 @@ internal sealed class HamsterService : IHamsterService
         var hamsters = await _repository.Hamster.GetAllHamstersAsync(trackChanges); 
         var activeHamsters = hamsters.Where(x => x.isActive == true);
         Random rnd = new Random();
-        int n = rnd.Next(0, activeHamsters.Count());//TODO: kanske behöver börja på 0?
+        int n = rnd.Next(0, activeHamsters.Count());
 
         var rndHamster = activeHamsters.ElementAt(n);
 
@@ -88,7 +88,7 @@ internal sealed class HamsterService : IHamsterService
     }
     public async Task<IEnumerable<HamsterDto>> GetWinnersAsync(bool trackChanges)
     {
-        var hamsters = await _repository.Hamster.GetAllHamstersAsync(trackChanges); //TODO: Kanske behöver vara Tolist();
+        var hamsters = await _repository.Hamster.GetAllHamstersAsync(trackChanges); 
 
         var winners = hamsters
             .Where(x=>x.isActive)

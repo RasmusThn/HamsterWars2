@@ -5,6 +5,7 @@
 @if (matches == null)
 {
     <p>Loading...</p>
+    <div class="spinner-border"></div>
     
 }
 else if(matches.Count > 0)
@@ -30,7 +31,7 @@ else
     [Inject]
     public IHamsterHttpService hamsterService { get; set; }
 
-    protected override async void OnInitialized() //TODO: Kolla om det går utan state has changed nu när det är async istället
+    protected override async void OnInitialized() 
     {
         matches = await matchService.GetAllMatchesByHamsterId(Hamster.Id);
         hamsters = await hamsterService.GetAllHamsters();
